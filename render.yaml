@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: budget-app-ai
+    env: docker
+    plan: free
+    autoDeploy: true
