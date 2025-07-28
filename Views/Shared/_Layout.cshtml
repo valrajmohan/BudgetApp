@@ -1,0 +1,509 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KC8MDMTND3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-KC8MDMTND3');
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @* googleads *@
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5293466560787434" crossorigin="anonymous"></script>
+    @* google search console *@
+    <meta name="google-site-verification" content="dSOo2HrZyau7ncUFgEDSxqkx2pQQDMoiPPaOUj8ADhA" />
+    <!-- Structured Data -->
+    <meta itemprop="name" content="Budget Planner Tool by JeeAiTech">
+    <meta itemprop="url" content="https://budgetplannertool.com/">
+    <link itemprop="logo" href="https://budgetplannertool.com/images/Jeelogo.png">
+    <meta name="description" content="Plan, track, and manage your finances effortlessly with Budget Planner Tool by JeeAiTech. Our free online tool helps you create personalized budgets, monitor expenses, and achieve financial goals with ease.">
+    <meta name="keywords" content="budget tracker, expense manager, financial tracker, personal finance, JeeAiTech, online budgeting tool">
+    <meta name="author" content="JeeAiTech">
+
+
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/toastify.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="icon" type="image/png" href="~/images/Jeelogo.png" />
+    <!-- Include Date Range Picker CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo-no-background.png" alt="AI Future Logo" style="width: 150px; height: auto;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <div id="userInfo" style="display: none;">
+                        <span id="userFullName" class="user-name"></span>
+                    </div>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item" id="registerLink">
+                            <a class="nav-link custom-button" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+                        </li>
+                        <li class="nav-item" id="loginLink">
+                            <a class="nav-link custom-button" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                        </li>
+                        <li class="nav-item" id="logoutLink" style="display: none;">
+                            <a class="nav-link custom-button" href="#" onclick="logout()">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginUsernameOrEmail" class="form-label">Username or Email</label>
+                            <input type="text" class="form-control" id="loginUsernameOrEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="forgotPasswordForm">
+                        <div class="mb-3">
+                            <label for="forgotUsernameOrEmail" class="form-label">Username or Email</label>
+                            <input type="text" class="form-control" id="forgotUsernameOrEmail" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Send Reset Code</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="resetPasswordForm">
+                        <div class="mb-3">
+                            <label for="resetEmail" class="form-label">Enter your MailId</label>
+                            <input type="email" class="form-control" id="resetEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="resetCode" class="form-label">Enter the code which received to you mail to reset the password</label>
+                            <input type="text" class="form-control" id="resetCode" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Reset Password</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted layoutfooter">
+        <div class="container">
+            <div class="row text-center justify-content-center py-3">
+                <div class="col-12">
+                    &copy; 2024 - Budget Tracker <b>JeeAiTech</b>
+                </div>
+                <div class="col-12 col-md-auto">
+                    <a asp-area="" asp-controller="Information" asp-action="Privacy"><b>Privacy Policy</b></a>
+                </div>
+                <div class="col-12 col-md-auto">
+                    <a asp-area="" asp-controller="Information" asp-action="Terms"><b>Terms of Service</b></a>
+                </div>
+                <div class="col-12 col-md-auto">
+                    <a asp-area="" asp-controller="Information" asp-action="Disclaimer"><b>Disclaimer</b></a>
+                </div>
+                <div class="col-12 col-md-auto">
+                    <a asp-area="" asp-controller="Information" asp-action="About"><b>About Us</b></a>
+                </div>
+                <div class="col-12 col-md-auto">
+                    <a asp-area="" asp-controller="Information" asp-action="Contact"><b>Contact Us</b></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/toastify-js.js"></script>
+    <!-- Moment.js (required for date calculations) -->
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+    <!-- Include Date Range Picker JS -->
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <script>
+
+        
+
+        $(document).ready(function () {
+
+            validateUser();
+
+            $('#registerForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var formData = {
+                    FirstName: $('#firstName').val(),
+                    LastName: $('#lastName').val(),
+                    Email: $('#email').val(),
+                    Username: $('#username').val(),
+                    Password: $('#password').val(),
+                    ConfirmPassword: $('#confirmPassword').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("RegisterUser", "Home")',
+                    data: formData,
+                    success: function (response) {
+                        if (response.success) {
+                            showSuccessToast(response.message);
+                            $('#registerModal').modal('hide');
+                            $('#loginModal').modal('show');
+                        } else {
+                            if (response.errors) {
+                                // Display validation errors
+                                var errorList = response.errors.join("\n");
+                                showWarningToast("Errors:\n" + errorList);
+                            } else {
+                                showWarningToast(response.message); // Display other errors like "User already exists"
+                            }
+                        }
+                    },
+                    error: function () {
+                        showWarningToast('An error occurred while processing the request.');
+                    }
+                });
+            });
+        });
+
+        $('#loginForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get form values
+            var usernameOrEmail = $('#loginUsernameOrEmail').val();
+            var password = $('#loginPassword').val();
+
+            // Send AJAX POST request
+            $.ajax({
+                url: '@Url.Action("Login", "Home")', // Adjust the action and controller names as needed
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ usernameOrEmail: usernameOrEmail, password: password }),
+                success: function (response) {
+                    if (response.success) {
+                        localStorage.setItem('username', response.username);
+                        localStorage.setItem('email', response.email);
+                        localStorage.setItem('firstName', response.firstName);
+                        localStorage.setItem('lastName', response.lastName);
+                        // Handle successful login (e.g., redirect or show success message)
+                        showSuccessToast('Login successful!');
+                        // Optionally, close the modal
+                        $('#loginModal').modal('hide');
+                        // Redirect to the Home controller
+                        window.location.href = '@Url.Action("Index", "Home")';
+                        
+                    } else {
+                        // Handle login failure
+                        showWarningToast(response.message);
+                    }
+                },
+                error: function () {
+                    showWarningToast('An error occurred while processing your request.');
+                }
+            });
+        });
+
+        function logout() {
+
+            // Clear specific local storage items
+            localStorage.removeItem('username');
+            localStorage.removeItem('email');
+            localStorage.removeItem('firstName');
+            localStorage.removeItem('lastName');
+
+            // Optionally, you can redirect the user after logout
+            // window.location.href = '/yourRedirectUrl'; // Uncomment to redirect after logout
+
+            // Show a message or perform other actions if needed
+            showSuccessToast('You have been logged out successfully.');
+            // Redirect to the Home controller
+            window.location.href = '@Url.Action("Index", "Home")';
+
+        };
+
+        function validateUser() {
+           
+            // Check if user is logged in
+            var email = localStorage.getItem('email');
+           
+            if (email) {
+                // User is logged in
+                $('#registerLink').hide(); // Hide Register link
+                $('#loginLink').hide();    // Hide Login link
+                $('#logoutLink').show();    // Show Logout link
+
+                // Display user's full name
+                var firstName = localStorage.getItem('firstName');
+                var lastName = localStorage.getItem('lastName');
+                $('#userFullName').text('Hi! ' + firstName + ' ' + lastName); // Set full name
+                $('#userInfo').show(); // Show user info section
+            } else {
+                // User is not logged in
+                $('#registerLink').show(); // Show Register link
+                $('#loginLink').show();    // Show Login link
+                $('#logoutLink').hide();    // Hide Logout link
+                $('#userInfo').hide(); // Hide user info section
+            }
+        }
+
+        $('#forgotPasswordLink').on('click', function (e) {
+            e.preventDefault(); // Prevent the default action
+            $('#loginModal').modal('hide'); // Hide the login modal
+            $('#forgotPasswordModal').modal('show'); // Show the forgot password modal
+        });
+
+        $('#forgotPasswordForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get the entered username or email
+            var usernameOrEmail = $('#forgotUsernameOrEmail').val();
+
+            // Send AJAX POST request
+            $.ajax({
+                url: '@Url.Action("ForgotPassword", "Home")', // Adjust the action and controller names as needed
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ email: usernameOrEmail }), // Use appropriate key
+                success: function (response) {
+                    if (response.success) {
+                        showSuccessToast(response.message);
+                        $('#forgotPasswordModal').modal('hide'); // Close the modal
+                        // Open the reset password modal
+                        $('#resetPasswordModal').modal('show');
+                    } else {
+                        showWarningToast(response.message); // Show error message
+                    }
+                },
+                error: function () {
+                    showWarningToast('An error occurred while processing your request.');
+                }
+            });
+        });
+
+        $('#resetPasswordForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get form values
+            var email = $('#resetEmail').val();
+            var resetCode = $('#resetCode').val();
+            var newPassword = $('#newPassword').val();
+
+            // Send AJAX POST request
+            $.ajax({
+                url: '@Url.Action("ResetPassword", "Home")', // Adjust the action and controller names as needed
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ email: email, resetCode: resetCode, newPassword: newPassword }),
+                success: function (response) {
+                    if (response.success) {
+                        showSuccessToast(response.message);
+                        $('#resetPasswordModal').modal('hide'); // Close the modal
+                    } else {
+                        showWarningToast(response.message); // Show error message
+                    }
+                },
+                error: function () {
+                    showWarningToast('An error occurred while processing your request.');
+                }
+            });
+        });
+
+        function showWarningToast(message) {
+            Toastify({
+                text: message,
+                duration: 5000,
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "center", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                    background: "linear-gradient(to right, #ff9900, #ff5500)",
+                },
+                onClick: function () { } // Callback after click
+            }).showToast(message);
+        }
+
+        function showSuccessToast(message) {
+            Toastify({
+                text: message,
+                duration: 5000,
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "center", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                    background: "linear-gradient(to right, #00cc00, #009900)",
+                },
+                onClick: function () { } // Callback after click
+            }).showToast(message);
+        }
+
+    </script>
+
+    <style>
+        /* General styles for the navbar links */
+        .nav-link {
+            padding: 10px 20px; /* Increase padding for a better button feel */
+            border-radius: 25px; /* Rounded edges */
+            margin: 5px; /* Space between buttons */
+            font-weight: bold; /* Bold text */
+            color: white; /* Text color */
+            text-align: center; /* Center text */
+            transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+        }
+
+        /* Custom button styles */
+        .custom-button {
+            background-color: #007bff; /* Primary color */
+            border: 2px solid transparent; /* Border around the button */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+        }
+
+            /* Hover effect for buttons */
+            .custom-button:hover {
+                background-color: #0056b3; /* Darker shade on hover */
+                border-color: #0056b3; /* Change border color on hover */
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+            }
+
+        /* Styles for user name display */
+        .user-name {
+            font-size: 1.1rem; /* Slightly larger font size */
+            color: #333; /* Dark color for contrast */
+            margin-right: 20px; /* Space from the right */
+            font-weight: bold; /* Bold text */
+            display: inline-block; /* Inline block to allow margin */
+        }
+
+    </style>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

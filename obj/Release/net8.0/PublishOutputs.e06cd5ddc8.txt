@@ -1,0 +1,12 @@
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.exe
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\web.config
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\appsettings.json
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.dll
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.deps.json
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.runtimeconfig.json
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.pdb
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\BouncyCastle.Cryptography.dll
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MailKit.dll
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MimeKit.dll
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.dll

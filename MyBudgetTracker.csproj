@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.8.0" />
+    <PackageReference Include="MimeKit" Version="4.8.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+	<ItemGroup>
+    <!-- Ensure these folders are excluded by setting CopyToPublishDirectory to Never -->
+    <Content Update="wwwroot\UsersBudgetData\**\*">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\UserRegistrationDetails\**\*">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\Images\" />
+	</ItemGroup>
+</Project>

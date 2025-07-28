@@ -1,0 +1,13 @@
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.exe
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\web.config
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\appsettings.json
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.dll
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.deps.json
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.runtimeconfig.json
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.pdb
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\BouncyCastle.Cryptography.dll
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MailKit.dll
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MimeKit.dll
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.dll
+D:\MyNetwork\MyProjectRepos\Budget\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\System.Formats.Asn1.dll

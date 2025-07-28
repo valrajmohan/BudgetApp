@@ -1,0 +1,2 @@
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\wwwroot\Dockerfile
+G:\Telliant\MyFolder\project\Budget\MyBudgetTracker\wwwroot\render.yaml

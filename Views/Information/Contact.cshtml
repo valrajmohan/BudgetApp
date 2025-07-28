@@ -1,0 +1,42 @@
+﻿@model ContactFormModel
+@{
+    Layout = "~/Views/Shared/_InformationLayout.cshtml";
+}
+@{
+    ViewData["Title"] = "Smart Budget Tracker: Get Support & Assistance - Contact Us";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="container py-5">
+    <p>We'd love to hear from you! Feel free to reach out using the form below or any of the methods listed.</p>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <h2>Contact Us</h2>
+            <form id="contactForm" method="post" asp-action="ContactInfo">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required>
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h2>Other Contact Methods</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a href="mailto: contact@jeeaitech.com" class="text-decoration-none">Email: contact@jeeaitech.com</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+{
+  "BudgetingCategorie": [
+    "Savings",
+    "Food",
+    "Clothing",
+    "Home Maintenance",
+    "Vehicle",
+    "Childcare",
+    "Children's Education Fees",
+    "Gold Savings",
+    "Children Future Savings",
+    "Family Entertainment",
+    "Gas (Cooking Gas)",
+    "Electricity (EB) Bill",
+    "Water Bill",
+    "Makeup and Beauty Products",
+    "Home Appliances",
+    "Donations",
+    "Family Functions",
+    "Gifts",
+    "Medical Expenses",
+    "Mobile Recharge",
+    "Groceries",
+    "Pet Care",
+    "Travel Expenses",
+    "Retirement Savings",
+    "HealthCare",
+    "Snacks"
+  ],
+  "BudgetCategoriePercentage": [
+    25,
+    4,
+    4,
+    4,
+    3,
+    4,
+    6,
+    4,
+    5,
+    4,
+    2,
+    1,
+    1,
+    1,
+    5,
+    1,
+    5,
+    2,
+    3,
+    2,
+    3,
+    1,
+    2,
+    4,
+    2,
+    2
+  ],
+  "IncomeCategories": [
+    "Salary",
+    "Profit",
+    "Interest",
+    "Loan",
+    "Gifted Amount",
+    "Sale Amount"
+  ],
+  "TotalSpend": [
+    {
+      "Date": "2025-06-01T00:00:00",
+      "Notes": "Gold Coin ",
+      "Category": "Gold Savings",
+      "Amount": 73600.0,
+      "Source": "income"
+    },
+    {
+      "Date": "2025-05-01T00:00:00",
+      "Notes": "Fixed deposit",
+      "Category": "Savings",
+      "Amount": 400000.0,
+      "Source": "income"
+    }
+  ],
+  "TotalIncome": [
+    {
+      "DateTime": "2025-06-01T00:00:00",
+      "Notes": "Xtrm Salary for month May",
+      "Category": "Salary",
+      "Amount": 102933.0
+    },
+    {
+      "DateTime": "2025-05-01T00:00:00",
+      "Notes": "HDFC Amount from fixed deposit ",
+      "Category": "Salary",
+      "Amount": 400000.0
+    },
+    {
+      "DateTime": "2025-05-01T00:00:00",
+      "Notes": "Existing balance ",
+      "Category": "Salary",
+      "Amount": 282109.0
+    }
+  ],
+  "SelectedCurrency": "INR"
+}

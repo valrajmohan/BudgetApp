@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @* googleads *@
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5293466560787434" crossorigin="anonymous"></script>
+    @* google search console *@
+    <meta name="google-site-verification" content="dSOo2HrZyau7ncUFgEDSxqkx2pQQDMoiPPaOUj8ADhA" />
+     <!-- Structured Data -->
+    <meta itemprop="name" content="Budget Planner Tool by JeeAiTech">
+    <meta itemprop="url" content="https://budgetplannertool.com/">
+    <link itemprop="logo" href="https://budgetplannertool.com/images/Jeelogo.png">
+    <meta itemprop="description" content="Plan, track, and manage your finances effortlessly with Budget Planner Tool by JeeAiTech. Our free online tool helps you create personalized budgets, monitor expenses, and achieve financial goals with ease. Register today and take control of your personal finances.">
+
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/toastify.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="icon" type="image/png" href="~/images/Jeelogo.png" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/images/logo-no-background.png" alt="AI Future Logo" style="width: 150px; height: auto;">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse justify-content-end">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-link nav-link custom-homebutton">
+                                <b>Home</b>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/toastify-js.js"></script>
+
+    <style>
+    .custom-homebutton {
+        background-color: #F9AA01; /* Green background */
+        border: none !important; /* Remove border */
+        color: #F93901; /* White text */
+        padding: 12px 24px; /* Add some padding */
+        text-align: center; /* Center text */
+        text-decoration: none; /* Remove underline */
+        display: inline-block; /* Make it inline-block */
+        font-size: 16px; /* Increase font size */
+        font-weight: 500;
+        margin: 4px 2px; /* Add some margin */
+        transition-duration: 0.4s; /* Add transition for hover effect */
+        cursor: pointer; /* Add pointer cursor on hover */
+        border-radius: 12px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+    }
+
+        .custom-homebutton:hover {
+            background-color: white; /* Change background on hover */
+            color: #F9AA01; /* Change text color on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+            border: none !important; /* Remove border */
+        }
+</style>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

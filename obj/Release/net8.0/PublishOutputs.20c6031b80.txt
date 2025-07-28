@@ -1,0 +1,7 @@
+D:\MyNetwork\MyBudgetTracker\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.exe
+D:\MyNetwork\MyBudgetTracker\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+D:\MyNetwork\MyBudgetTracker\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\appsettings.json
+D:\MyNetwork\MyBudgetTracker\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.dll
+D:\MyNetwork\MyBudgetTracker\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.deps.json
+D:\MyNetwork\MyBudgetTracker\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.runtimeconfig.json
+D:\MyNetwork\MyBudgetTracker\MyBudgetTracker\obj\Release\net8.0\PubTmp\Out\MyBudgetTracker.pdb

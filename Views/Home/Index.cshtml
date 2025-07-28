@@ -1,0 +1,2967 @@
+﻿@{
+    ViewData["Title"] = "Budget Tracker - Expense Manager & Financial Planner";
+}
+
+<div class="container-fluid">
+    <small class="text-muted d-block" id="guestWarning"
+           style="display: none; color: darkorange !important; text-align: center; margin-bottom: 15px;">
+        You are in guest mode, entering any data will be available only up to your browser cache clear or max of two days.
+        To store your data permanently and track your budget permanently for free, please
+        <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" style="color: darkorange;"><b>Register</b></a>
+        or
+        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" style="color: darkorange;"><b>Log in</b></a>
+        if you are already registered.
+    </small>
+    <div class="row text-center mb-4">
+
+        <!-- Choose Currency Dropdown -->
+        <div class="col-md-4 mb-3">
+            <label for="currency" class="form-label">Choose Currency</label>
+            <select class="form-select" id="currency" onchange="handleCurrencyChange(this.value, this.options[this.selectedIndex].innerHTML)">
+                <option value="USD" selected>&#36; USD - United States Dollar</option>
+                <option value="EUR">&#8364; EUR - Euro</option>
+                <option value="GBP">&#163; GBP - British Pound</option>
+                <option value="INR">&#8377; INR - Indian Rupee</option>
+                <option value="AUD">&#36; AUD - Australian Dollar</option>
+                <option value="CAD">&#36; CAD - Canadian Dollar</option>
+                <option value="CHF">&#67;&#72;&#70; CHF - Swiss Franc</option>
+                <option value="CNY">&#165; CNY - Chinese Yuan</option>
+                <option value="JPY">&#165; JPY - Japanese Yen</option>
+                <option value="MXN">&#36; MXN - Mexican Peso</option>
+                <option value="BRL">&#82;&#36; BRL - Brazilian Real</option>
+                <option value="ZAR">&#82; ZAR - South African Rand</option>
+                <option value="NZD">&#36; NZD - New Zealand Dollar</option>
+                <option value="SEK">&#107;&#114; SEK - Swedish Krona</option>
+                <option value="NOK">&#107;&#114; NOK - Norwegian Krone</option>
+                <option value="DKK">&#107;&#114; DKK - Danish Krone</option>
+                <option value="SGD">&#36; SGD - Singapore Dollar</option>
+                <option value="HKD">&#36; HKD - Hong Kong Dollar</option>
+                <option value="KRW">&#8361; KRW - South Korean Won</option>
+                <option value="TRY">&#8378; TRY - Turkish Lira</option>
+                <option value="ILS">&#8362; ILS - Israeli New Shekel</option>
+                <option value="RUB">&#1088;&#1091;&#1073; RUB - Russian Ruble</option>
+                <option value="THB">&#3647; THB - Thai Baht</option>
+                <option value="PHP">&#8369; PHP - Philippine Peso</option>
+                <option value="MYR">&#82;&#77; MYR - Malaysian Ringgit</option>
+                <option value="IDR">&#82;&#112; IDR - Indonesian Rupiah</option>
+                <option value="VND">&#8363; VND - Vietnamese Dong</option>
+                <option value="PKR">&#8360; PKR - Pakistani Rupee</option>
+                <option value="AED">&#1583;&#1740; AED - United Arab Emirates Dirham</option>
+                <option value="COP">&#36; COP - Colombian Peso</option>
+                <option value="CLP">&#36; CLP - Chilean Peso</option>
+                <option value="ARS">&#36; ARS - Argentine Peso</option>
+                <option value="PEN">&#83;&#47;&#83; PEN - Peruvian Nuevo Sol</option>
+                <option value="UYU">&#36; UYU - Uruguayan Peso</option>
+                <option value="BHD">&#172; BHD - Bahraini Dinar</option>
+                <option value="KWD">&#1583;&#1726; KWD - Kuwaiti Dinar</option>
+                <option value="OMR">&#65020; OMR - Omani Rial</option>
+                <option value="JOD">&#74;&#68; JOD - Jordanian Dinar</option>
+                <option value="DZD">&#1583; DZD - Algerian Dinar</option>
+                <option value="MAD">&#1583;&#1740; MAD - Moroccan Dirham</option>
+                <option value="TND">&#1583; TND - Tunisian Dinar</option>
+                <option value="LKR">&#8360; LKR - Sri Lankan Rupee</option>
+                <option value="HUF">&#70;&#116; HUF - Hungarian Forint</option>
+                <option value="CZK">&#75;&#269; CZK - Czech Koruna</option>
+                <option value="PLN">&#122;&#322; PLN - Polish Zloty</option>
+                <option value="HRK">&#106;&#107; HRK - Croatian Kuna</option>
+                <option value="RON">&#1085;&#1086; RON - Romanian Leu</option>
+                <option value="BGN">&#1083;&#1074; BGN - Bulgarian Lev</option>
+                <option value="ISK">&#107;&#114; ISK - Icelandic Króna</option>
+                <option value="MDL">&#76;&#101; MDL - Moldovan Leu</option>
+                <option value="KZT">&#1083;&#1074; KZT - Kazakhstani Tenge</option>
+                <option value="GHS">&#162; GHS - Ghanaian Cedi</option>
+                <option value="NGN">&#8358; NGN - Nigerian Naira</option>
+                <option value="KES">&#75;&#101; KES - Kenyan Shilling</option>
+                <option value="RWF">&#70;&#114; RWF - Rwandan Franc</option>
+                <option value="XOF">&#8373; XOF - West African CFA Franc</option>
+                <option value="XAF">&#70;&#67; XAF - Central African CFA Franc</option>
+                <option value="ZWL">&#90;&#36; ZWL - Zimbabwean Dollar</option>
+            </select>
+        </div>
+
+        <!-- Select Budget Period Dropdown -->
+        <div class="col-md-4 mb-3">
+            <label for="budgetPeriod" class="form-label">Select Budget Month</label>
+            <select class="form-select" id="budgetPeriod">
+            </select>
+        </div>
+
+        <!-- Updated Date Range Selection in Single Field -->
+        <div class="col-md-4 mb-3">
+            <label for="dateRange" class="form-label">Selected Month Date Range <b>(MM/DD/YYYY)</b></label>
+            <input type="text" id="dateRange" class="form-control" placeholder="Select Date Range" disabled>
+        </div>
+
+        <!-- Income Card -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card shadow-sm border-0 h-100 amountSummary">
+                <div class="card-body">
+                    <!-- Title -->
+                    <h5 class="card-title" id="incomeTitleCard">Selected Month Income $</h5>
+                    <!-- Pencil Icon (trigger for the modal) -->
+                    <span class="position-absolute top-0 end-0 p-2">
+                        <i class="bi bi-pencil-fill" data-bs-toggle="modal" data-bs-target="#incomeModal"></i>
+                    </span>
+                    <div class="position-relative mt-4">
+                        <div class="d-flex align-items-center">
+                            <input type="text" id="totalIncomeInput" class="card-text display-6 form-control-plaintext editable-field ms-2" value="0" readonly>
+                        </div>
+
+
+                    </div>
+                    <hr>
+                    <small class="text-muted d-block" id="indicateIncomeAmountDuring">Total Income Amount</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Adding Income -->
+        <div class="modal fade" id="incomeModal" tabindex="-1" aria-labelledby="incomeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="incomeModalLabel">Add Income</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Date and Time Field -->
+                        <div class="mb-3">
+                            <label id="incomeSelectedMonthlable" class="form-label">Selected DateRange:</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="incomeDateTime" class="form-label">Date and time for the income being added</label>
+                            <input type="datetime-local" class="form-control form-control-sm" id="incomeDateTime" value="">
+                        </div>
+
+                        <!-- Horizontal Checkbox for Spend Source -->
+                        <div class="mb-3">
+                            <small class="text-muted d-block" id="tranferBalanceFromPreviousMonth"></small>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="fundSourceOption" id="incomeOption" value="income" checked>
+                                <label class="form-check-label" for="incomeOption">New Income</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="fundSourceOption" id="previousBalanceOption" value="previousBalance">
+                                <label class="form-check-label" for="previousBalanceOption">Transfer from Previous Balance</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="fundSourceOption" id="savingsOption" value="savings">
+                                <label class="form-check-label" for="savingsOption">Transfer from Savings</label>
+                            </div>
+                        </div>
+                        <small class="text-muted d-block" id="incomeLimitIndicatorLabel"></small>
+
+                        <!-- Row with Notes, Category, and Amount -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-12 col-md-4">
+                                <label for="incomeNotes" class="form-label">Notes</label>
+                                <input type="text" class="form-control form-control-sm" id="incomeNotes" placeholder="Enter notes">
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label for="incomeCategory" class="form-label">Income Category</label>
+                                <select class="form-select form-select-sm" id="incomeCategory">
+                                    <!-- Dynamically populated categories -->
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label for="incomeAmount" class="form-label">Amount</label>
+                                <input type="number" class="form-control form-control-sm" id="incomeAmount" placeholder="Enter amount">
+                            </div>
+                        </div>
+
+                        <!-- Add Button -->
+                        <div class="d-grid mb-3">
+                            <div class="d-flex justify-content-around mb-3">
+                                <button type="button" class="btn btn-primary" id="addIncomeBtn">Add Spend</button>
+                                <button type="button" class="btn btn-secondary" id="cancelIncomeBtn" onclick="cancelIncomeEdit()">Cancel</button>
+                            </div>
+                        </div>
+
+                        <!-- Income Table (for the day) -->
+                        <hr>
+                        <h6 id="labelforAddIcome"></h6>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-sm w-100 styled-table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-nowrap">Date & Time</th>
+                                        <th class="text-nowrap">Notes</th>
+                                        <th class="text-nowrap">Category</th>
+                                        <th class="text-nowrap">Amount</th>
+                                        <th class="text-nowrap">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="incomeTableBody">
+                                    <!-- Dynamically populated rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Transfer from Previous Balance -->
+        <div class="modal fade" id="previousBalanceModal" tabindex="-1" aria-labelledby="previousBalanceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
+                <!-- Fullscreen on small devices -->
+                <div class="modal-content" style="max-height: 80vh;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="previousBalanceModalLabel">Previous Balance Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Wrapper div for scrollable table with increased max-height -->
+                        <div style="max-height: 60vh; overflow-y: auto;">
+                            <!-- Responsive table wrapper for horizontal scroll on small screens -->
+                            <div class="table-responsive">
+                                <!-- Table for Monthly Totals with Transfer Options -->
+                                <table class="table table-striped table-sm w-100 styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-nowrap">Month</th>
+                                            <th class="text-nowrap">Total Income</th>
+                                            <th class="text-nowrap">Total Spend</th>
+                                            <th class="text-nowrap">Remaining Amount</th>
+                                            <th class="text-nowrap">Select to Transfer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="monthlyTotalsTableBody">
+                                        <!-- Dynamically populated rows with checkboxes -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span>Total Selected Remaining Amount to Transfer: <span id="totalSelectedAmount">0.00</span></span>
+                            <div>
+                                <button id="icometransferButton" class="btn btn-primary btn-sm">Transfer to Current Month</button>
+                                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal for Transfer from Previous Savings -->
+        <div class="modal fade" id="previousSavingsModal" tabindex="-1" aria-labelledby="previousSavingsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
+                <div class="modal-content" style="max-height: 80vh;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="previousSavingsModalLabel">Previous Savings Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="max-height: 60vh; overflow-y: auto;">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-sm w-100 styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-nowrap">Month</th>
+                                            <th class="text-nowrap">Total Savings</th>
+                                            <th class="text-nowrap">Select to Transfer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="monthlySavingsTableBody">
+                                        <!-- Dynamically populated rows with checkboxes -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span>Total Selected Savings Amount to Transfer: <span id="totalSelectedSavingsAmount">0.00</span></span>
+                            <div>
+                                <button id="savingsTransferButton" class="btn btn-primary btn-sm">Transfer to Current Month</button>
+                                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @* **************************************************************************************************************************************************************** *@
+        @* End of Income Mangement UI *@
+        @* **************************************************************************************************************************************************************** *@
+
+
+
+
+        <!-- This Month's Spend So Far Card -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card shadow-sm border-0 h-100 amountSummary">
+                <div class="card-body">
+                    <!-- Title at the Top -->
+                    <h5 class="card-title" id="spendTitleCard">Selected Month Spend $</h5>
+                    <!-- Pencil Icon at the Top Right of Editable Field -->
+                    <span class="position-absolute top-0 end-0 p-2">
+                        <i class="bi bi-pencil-fill spendAmountpencilIcon" data-bs-toggle="modal" data-bs-target="#spendingModal"></i>
+                    </span>
+                    <!-- Bottom Section with two spend amounts in horizontal alignment -->
+                    <div class="position-relative mt-4">
+                        <div class="d-flex align-items-center">
+                            <input type="text" id="totalSpendfrombothIncomeandSavings" class="card-text display-6 form-control-plaintext editable-field ms-2" value="0" readonly>
+                        </div>
+
+
+                    </div>
+                    <!-- Horizontal line -->
+                    <hr>
+                    <small class="text-muted d-block" id="indicateSpendAmountDuring">Total Spend Amount</small>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal for Adding spend -->
+        <div class="modal fade" id="spendingModal" tabindex="-1" aria-labelledby="spendingModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="spendingModalLabel">Add Spend Entry</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Date and Time Field -->
+                        <div class="mb-3">
+                            <label for="spendDateTime" class="form-label">Date and Time</label>
+                            <input type="datetime-local" class="form-control" id="spendDateTime" value="">
+                        </div>
+
+                        <!-- Horizontal Checkbox for Spend Source -->
+                        <div class="mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="spendSource" id="spendFromIncome" value="income" checked>
+                                <label class="form-check-label" for="spendFromIncome">Spend from Income</label>
+                            </div>
+                            @* <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="spendSource" id="spendFromSavings" value="savings">
+                            <label class="form-check-label" for="spendFromSavings">Spend from Savings</label>
+                            </div> *@
+                        </div>
+
+                        <!-- Row with Notes, Category, and Amount -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-4">
+                                <label for="spendNotes" class="form-label">Notes</label>
+                                <input type="text" class="form-control" id="spendNotes" placeholder="Enter notes">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="spendCategory" class="form-label">Spend Category</label>
+                                <select class="form-select" id="spendCategory" onchange="calculateBudgetPercentage()">
+                                    <!-- Dynamically populated categories -->
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="spendAmount" class="form-label">Amount</label>
+                                <input type="number" class="form-control" id="spendAmount" placeholder="Enter amount">
+                            </div>
+                        </div>
+                        <small class="text-muted d-block" id="budgetPercentageResult"></small>
+                        <!-- Add Button -->
+                        <div class="d-flex justify-content-around mb-3">
+                            <button type="button" class="btn btn-primary" id="addspendBtn" onclick="AddSpendAmount()">Add Spend</button>
+                            <button type="button" class="btn btn-secondary" id="cancelBtn" onclick="cancelEdit()">Cancel</button>
+                        </div>
+
+                        <!-- spend Table (for the day) -->
+                        <hr>
+                        <h6 id="lableforSpedlist">Spend for the Day:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-sm w-100 styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date & Time</th>
+                                        <th>Notes</th>
+                                        <th>Category</th>
+                                        <th>Amount</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="spendTableBody">
+                                    <!-- Dynamically populated rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Remaining Amount Card -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card shadow-sm border-0 h-100 amountSummary">
+                <div class="card-body">
+                    <!-- Title at the Top -->
+                    <h5 class="card-title" id="balanceTitleCard">Selected Month Balance $</h5>
+
+                    <!-- Bottom Section with Currency Symbol, Editable Field, and Pencil Icon -->
+                    <div class="position-relative mt-1">
+                        <input type="text" id="remainingfromIncome" class="card-text display-12 form-control-plaintext editable-field ms-2" value="0" readonly style="font-weight: bold;">
+
+                        <small class="text-muted d-block">Selected month Balance amount that has not been spent on anything.</small>
+                        <hr>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <!-- Section for Total Spend from Income -->
+                            <div class="spend-section text-center">
+                                <input type="text" id="totalBalancefromIncome" class="card-text display-12 form-control-plaintext editable-field ms-2" value="0" readonly style="font-size: 1.0rem;">
+                                <small class="text-muted d-block">Total Remaining Balance So Far</small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Overall Amount So Far Card -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card shadow-sm border-0 h-100 amountSummary">
+                <div class="card-body">
+                    <!-- Title at the Top -->
+                    <h5 class="card-title" id="savingsTitleCard">Selected Month Savings $</h5>
+                    <!-- Bottom Section with Currency Symbol, Editable Field, and Pencil Icon -->
+                    <div class="position-relative mt-1">
+                        <input type="text" id="totalsavingsInRange" class="card-text display-12 form-control-plaintext editable-field ms-2" value="0" readonly style="font-weight: bold;">
+
+                        <small id="selectedMthSavings" class="text-muted d-block">Savings amount during </small>
+                        <hr>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <!-- Section for Total Spend from Income -->
+                            <div class="spend-section text-center">
+                                <input type="text" id="allTotalsoforsavings" class="card-text display-12 form-control-plaintext editable-field ms-2" value="0" readonly style="font-size: 1.0rem;">
+                                <small class="text-muted d-block">Total Savings amount so for.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="row mb-4">
+
+        <!-- Income Section with fixed height and mobile responsiveness -->
+        <div class="col-lg-6 mb-3">
+            <div class="card shadow-sm border-0 equal-height">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Income</h5>
+                        <span id="incomeSelectedDateRange" style="font-size: 0.9rem; font-weight: bold;"></span>
+                    </div>
+                    <div class="d-flex justify-content-center my-3">
+                        <label class="me-3">
+                            <input type="radio" name="incomeViewOption" value="group" onclick="populateIncomeTable(true)" checked> Group by Category
+                        </label>
+                        <label>
+                            <input type="radio" name="incomeViewOption" value="list" onclick="populateIncomeTable(false)"> List All
+                        </label>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="incomeTable" class="table table-bordered table-striped table-sm styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Notes</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="incomeTableBody">
+                                <!-- Dynamic content populated via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spend Amount Section with fixed height and mobile responsiveness -->
+        <div class="col-lg-6 mb-3">
+            <div class="card shadow-sm border-0 equal-height">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Amount Spend</h5>
+                        <span id="spendAmountDatatatableDateRange" style="font-size: 0.9rem; font-weight: bold;"></span>
+                    </div>
+                    <div class="d-flex justify-content-center my-3">
+                        <label class="me-3">
+                            <input type="radio" name="viewOption" id="groupByCategory" value="group" onclick="populateSpendTable(true)" checked> Group by Category
+                        </label>
+                        <label>
+                            <input type="radio" name="viewOption" id="listAll" value="list" onclick="populateSpendTable(false)"> List All
+                        </label>
+                    </div>
+                    <small class="text-muted d-block mb-2">The allocated amount is determined by the total income and the percentage assigned to each category in the budget allocation</small>
+                    <div class="table-responsive">
+                        <table id="spendTable" class="table table-bordered table-striped table-sm w-100 styled-table">
+                            <thead>
+                                <!-- Table headers will be generated dynamically here -->
+                            </thead>
+                            <tbody id="spendTableBody">
+                                <!-- Table body rows will be generated dynamically here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-lg-6 col-md-12 mb-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Spend Amount So Far</h5>
+                        <span id="spendAmountDateRange" style="font-size: 0.9rem; font-weight: bold;"></span>
+                    </div>
+                    <div class="chart-container mt-2">
+                        <canvas id="spendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trigger Button for Modal -->
+        <div class="col-lg-6 col-md-12 mb-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">Allocate Budget</h5>
+                        <span>
+                            <button class="btn btn-primary btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#budgetModal">
+                                <i class="bi bi-pencil-fill me-1"></i>
+                                <span class="d-none d-sm-inline">Edit</span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Expense Input Sections -->
+    <div class="row mb-4">
+        <div class="col-lg-12 mb-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">Budget Vs Actual</h5>
+                        <span id="BudgetVsAcutalDatarange" style="font-size: 0.9rem; font-weight: bold;"></span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="actualChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Budget Add edit start*@
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="budgetModal" tabindex="-1" aria-labelledby="budgetModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="budgetModalLabel">Allocate Your Budget</h5>
+                        <button type="button" class="btn btn-outline-primary ms-3" id="addCategoryBtn">+ Add Category</button>
+                        <button type="button" class="btn-close categorylistModel" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form for adding new category -->
+                        <div id="addCategoryForm" class="d-none mb-3">
+                            <div class="input-group">
+                                <input type="text" id="newCategoryName" class="form-control" placeholder="New Category" aria-label="Category Name">
+                                <input type="number" id="newCategoryPercentage" class="form-control" placeholder="Percentage" aria-label="Percentage" min="0" max="100" step="0.01">
+                                <button type="button" class="btn btn-primary" id="addCategorySubmit">Add</button>
+                            </div>
+                            <div class="alert alert-danger d-none mt-2" id="newCategoryError">Total percentage must be 100%!</div>
+                        </div>
+
+                        <form id="budgetForm">
+                            <div id="categoriesContainer"></div>
+                            <div class="mt-3">
+                                <span>Total: <span id="totalPercentage">0%</span></span>
+                            </div>
+                            <div class="mt-2 alert alert-danger d-none" id="errorAlert">Total percentage must be 100%!</div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="saveBudgetBtn" data-bs-dismiss="modal" disabled>Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Deletion</h5>
+                        <button type="button" class="btn-close confirmationClose" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this category?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Budget Add edit end*@
+
+    </div>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2>Budget Tracker Overview</h2>
+                <p class="lead">
+                    Budget Tracker is a simple yet powerful tool designed to help users manage their finances efficiently. Whether you're tracking personal expenses, managing household income, or planning for future savings, this tool provides comprehensive features to monitor, control, and plan your finances with ease. Our Budget Tracker is available for free, and users can choose to either use the guest mode for quick and temporary data entry or register for permanent access and data storage.
+                </p>
+                <p>
+                    With the rise of digital finance tools, our Budget Tracker stands out by offering intuitive design and user-friendly features that cater to both novice and experienced users. This ensures that financial management is not only efficient but also accessible and enjoyable for everyone.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h4>Key Features</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong>Currency Selection:</strong> Users can select their preferred currency from a dropdown list. Supported currencies include USD, EUR, GBP, INR, and more. This ensures that all financial records and balances are displayed in the user's chosen currency, making it easier for them to manage their finances globally. The tool also features automatic currency conversion for users dealing with multiple currencies.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Monthly Budget Selection:</strong> The tool allows users to select any month from the last two years, helping them enter and review historical income and spending data. This feature also includes a date range that automatically adjusts to show the start and end date of the selected month, providing a clear timeframe for budgeting. Users can easily switch between months to analyze trends over time.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Income Entry:</strong> Users can record income for any selected month by choosing from a variety of income categories such as:
+                        <ul>
+                            <li>Salary</li>
+                            <li>Profit</li>
+                            <li>Interest</li>
+                            <li>Loan</li>
+                            <li>Gifted Amount</li>
+                            <li>Sale Amount</li>
+                            <li>Freelance Income</li>
+                            <li>Rental Income</li>
+                        </ul>
+                        Each income entry can be edited at any time, giving users the flexibility to adjust their records as needed. Additionally, users can set up recurring income entries for regular payments.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Expense Tracking:</strong> The Budget Tracker allows users to enter and categorize their spending for any selected month. Expenses are categorized into custom fields, and users can provide notes for each entry. The tool also prevents users from spending more than their income for the month, ensuring they stay within budget. Users can also set limits on categories, and receive alerts when nearing those limits.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Balance and Savings Monitoring:</strong> The tool offers a real-time display of the user's remaining balance and savings:
+                        <ul>
+                            <li><strong>Balance:</strong> This shows the total amount of money remaining after expenses for the selected month, providing users with a clear picture of their financial health.</li>
+                            <li><strong>Savings:</strong> Users can view their overall savings amount and track how much they have saved over time. They can also set savings goals and monitor their progress towards achieving them.</li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Custom Categories:</strong> Users have the ability to create and manage custom expense categories tailored to their specific needs. This personalization enhances the tracking experience and allows for more detailed analysis.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-12">
+                <h4>Visual Insights</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong>Spending Breakdown (Pie Chart):</strong> A visual pie chart provides users with an easy-to-understand breakdown of their spending by category. This helps users see where their money is going and identify areas where they may want to cut back. Users can hover over segments for more detailed information.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Budget Management (Bar Chart):</strong> The bar chart allows users to set budget limits for each category, giving them control over how much they wish to spend in specific areas such as groceries, entertainment, or utilities. Users can adjust their budget allocations at any time through an intuitive interface, ensuring that their financial plans stay relevant.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Historical Trends Visualization:</strong> Users can visualize their spending and saving trends over months and years. This historical analysis empowers users to make informed decisions based on their past financial behavior.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-12">
+                <h4>Data Organization and Control</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong>Categorized Tables:</strong> Users can view all their spending and income data in easy-to-read tables. By default, the data is grouped by category, but users can toggle to view all records without grouping. This makes it easier to analyze individual transactions or view a broader overview. Users can also export their data to CSV or Excel for offline analysis.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Data Permanence and Guest Mode:</strong> Users who wish to use the Budget Tracker without registering can take advantage of the guest mode. However, data entered in guest mode is stored temporarily and will be lost after two days or when the browser cache is cleared. For a permanent solution, users are encouraged to register, which ensures that all their data is securely stored and accessible at any time.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Register or Login:</strong> At the top of the dashboard, users can easily register or log in to store their data permanently. Registration is free and unlocks full functionality, including access to historical data and personalized budget reports. Users can also recover their password through a simple recovery process.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Privacy and Security:</strong> User data is protected with industry-standard encryption and security measures, ensuring that financial information is safe from unauthorized access. Regular backups are performed to prevent data loss.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-12">
+                <h4>User Registration Benefits</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong>Data Permanence:</strong> All entered data is stored securely, ensuring users can access their past financial records. Users can also edit or delete records easily, keeping their data up-to-date.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Personalized Insights:</strong> Registered users can view long-term financial trends and access personalized reports that help in making informed financial decisions. Insights include spending habits, savings trends, and budgeting efficiency.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Unlimited Access:</strong> Users can track their budget anytime, anywhere, with no restrictions. The mobile-friendly design ensures that users can manage their finances on the go.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Community Support:</strong> Registered users have access to community forums and resources for financial education, providing a platform to share tips and experiences with others.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Exclusive Features:</strong> As part of our commitment to improving user experience, registered users gain access to premium features such as advanced analytics, personalized alerts, and budgeting templates.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-12">
+                <h4>Feedback and Improvement</h4>
+                <p>
+                    We value user feedback and continuously strive to enhance our Budget Tracker. Users can easily provide feedback through our dedicated feedback form, allowing us to address any concerns or suggestions. Regular updates based on user input ensure that our tool remains relevant and effective in meeting users' financial management needs.
+                </p>
+                <p>
+                    Join our community today and take the first step towards better financial management with Budget Tracker!
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<!-- Include Bootstrap Icons for the pencil icon -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Moment.js (required for date calculations) -->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<!-- Date Range Picker -->
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+
+
+<script>
+
+
+
+    //****************************************************************************************************************************************************** */
+    //Global variables
+    //****************************************************************************************************************************************************** */
+
+    var userMasterData;
+    var incomecategory;
+    var IncomeSource;
+    var spendCategory;
+    var SpendingSource;
+    let selectedCurrencySym;
+
+    function fetchBudgetData() {
+
+        var userName = localStorage.getItem('username');
+
+        if (userName) {
+            document.getElementById('guestWarning').style.setProperty('display', 'none', 'important');
+        } else {
+            var guestuser = localStorage.getItem('randomUsername');
+            if (guestuser) {
+                userName = guestuser;
+            } else {
+                const randomUsername = generateGuestUsername();
+                userName = randomUsername;
+                localStorage.setItem('randomUsername', randomUsername);
+            }
+            document.getElementById('guestWarning').style.display = 'block'; // Show warning
+        }
+
+
+        $.ajax({
+            type: 'GET', // Use 'GET' since your action method is an HttpGet
+            url: '@Url.Action("GetBudgetData", "Home")', // Use Razor to build the URL
+            data: { name: userName }, // Pass the name as a parameter
+            dataType: 'json', // Specify the expected data type from the server
+            success: function (data) {
+                userMasterData = data;
+                incomecategory = userMasterData.IncomeCategories;
+                IncomeSource = userMasterData.TotalIncome;
+                spendCategory = userMasterData.BudgetingCategorie;
+                SpendingSource = userMasterData.TotalSpend;
+
+                //set the currency dropdown value
+                const currencySelect = document.getElementById('currency');
+                currencySelect.value = userMasterData.SelectedCurrency;
+
+                selectedCurrencySym = currencySelect.options[currencySelect.selectedIndex].innerHTML.split(' ')[0]; // Get the first part which is the symbol
+                //update all labels
+                updateCurrencySymbol();
+
+                // Call the function to populate the dropdown
+                populateIncomeCategoryDropdown(userMasterData.IncomeCategories);
+                //Load Budget Configuration
+                BudgetConfigurationChart();
+                //Load Budget vs Actula
+                BudgetVsActual();
+                //Load Income and Spend Tables
+                populateSpendTable();
+                populateIncomeTable();
+                //Re-Calculate and Display Icome
+                calculateTotalIcomeandSpend();
+                //Re-Load the income list which is in model popup
+                updateIncomeTable();
+                //Re-Load the spend list which is in model popup
+                updateSpendingTable();
+                //Re-Load Spend Chart
+                loadSpendChart();
+
+            },
+            error: function (error) {
+                showWarningToast("NetWork issues! Please try again later");
+                console.error('Error fetching data:', error);
+            }
+        });
+    }
+
+
+    //****************************************************************************************************************************************************** */
+    //Global variables End
+    //****************************************************************************************************************************************************** */
+
+    //****************************************************************************************************************************************************** */
+    //Commmon functions
+    //****************************************************************************************************************************************************** */
+
+    // Generate a random color for each category
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    function generateGuestUsername() {
+        const adjectives = [
+            "Cool", "Brave", "Mighty", "Sneaky", "Charming", "Witty", "Fierce", "Gentle",
+            "Swift", "Clever", "Bold", "Creative", "Joyful", "Happy", "Wise", "Daring"
+        ];
+
+        const nouns = [
+            "Tiger", "Lion", "Eagle", "Shark", "Dragon", "Phoenix", "Warrior", "Ninja",
+            "Wizard", "Pirate", "Knight", "Sage", "Hero", "Rogue", "Viking", "Samurai"
+        ];
+
+        let username;
+        const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+        const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+
+        // Combine them to form a username
+        username = randomAdjective + randomNoun + Math.floor(Math.random() * 1000);
+
+        return 'Guest' + username;
+    }
+
+    function roundUpToNearestFive(value) {
+        return Math.ceil(value / 5) * 5;
+    }
+
+    // Function to generate date ranges for the last two years with month-year labels
+    function getLastTwoYearsRanges() {
+        let ranges = [];
+        let currentDate = moment();
+
+        // Loop for each month for the last two years
+        for (let i = 0; i < 24; i++) {
+            let start = currentDate.clone().startOf('month');
+            let end = currentDate.clone().endOf('month');
+
+            ranges.push({
+                label: start.format('MMMM YYYY'), // Month Year format
+                start: start,
+                end: end
+            });
+
+            // Move to the previous month
+            currentDate.subtract(1, 'month');
+        }
+
+        return ranges;
+    }
+
+    function populateIncomeCategoryDropdown(incomecategory) {
+        const incomeCategorySelect = document.getElementById('incomeCategory');
+
+        // Clear any existing options (optional, in case you're updating the dropdown)
+        incomeCategorySelect.innerHTML = '';
+
+        // Populate the dropdown with the fetched categories
+        incomecategory.forEach(category => {
+            let option = document.createElement('option');
+            option.text = category;
+            option.value = category;
+            incomeCategorySelect.add(option);
+        });
+    }
+
+    // Function to update the displayed selected date range
+    function updateSelectedDateRange(start, end) {
+        $('#selectedRange').text(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
+    }
+
+    function SaveUserData() {
+        var userName = localStorage.getItem('username');
+
+        if (userName) {
+            //
+        } else {
+            var guestuser = localStorage.getItem('randomUsername');
+            userName = guestuser;
+        }
+        $.ajax({
+            url: '@Url.Action("SaveBudgetData", "Home")', // Adjust the URL based on your controller and action
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ userData: userName, userMasterData: userMasterData }), // Combine both in the payload
+            success: function (response) {
+                console.log('Data saved successfully:', response);
+            },
+            error: function (err) {
+                console.error('Error saving data:', err);
+            }
+        });
+    }
+
+
+    // Function to update the selected date range display
+    function updateSelectedDateRange(start, end) {
+        $('#spendAmountDateRange').text(`${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}`);
+        $('#BudgetVsAcutalDatarange').text(`${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}`);
+        $('#spendAmountDatatatableDateRange').text(`${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}`);
+        $('#incomeSelectedDateRange').text(`${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}`);
+        $('#indicateSpendAmountDuring').text(`Amount spend during ${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}`);
+        $('#indicateIncomeAmountDuring').text(`Income during ${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}`);
+        $('#labelforAddIcome').text(`Income entries for the selected daterange ${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}`);
+        $('#lableforSpedlist').text(`Spend entries for the selected daterange ${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}`);
+        $('#selectedMthSavings').text(`Savings amount during ${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}`);
+        $('#incomeSelectedMonthlable').text(`Selected DateRange: ${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}`);
+
+        // $('#incomeTitleCard').text(`${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}  Income`);
+        // $('#spendTitleCard').text(`${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}  Spend`);
+        // $('#balanceTitleCard').text(`${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}  Balance`);
+        // $('#savingsTitleCard').text(`${start.format('MM/DD/YYYY')} - ${end.format('MM/DD/YYYY')}  Savings`);
+
+        // Check if the start date is within the current month
+        const currentMonth = moment().startOf('month');
+        const nextMonth = moment().endOf('month');
+
+        if (start.isBetween(currentMonth, nextMonth, 'day', '[]')) {
+            // Enable both options
+            $('#previousBalanceOption').prop('disabled', false);
+            $('#savingsOption').prop('disabled', false);
+            $('#tranferBalanceFromPreviousMonth').text('');
+            updateIncomeFields();
+        } else {
+            // Disable the options
+            $('#previousBalanceOption').prop('disabled', true);
+            $('#savingsOption').prop('disabled', true);
+            // Clear the selected state if it's not the current month
+            if ($('#previousBalanceOption').is(':checked') || $('#savingsOption').is(':checked')) {
+                $('#incomeOption').prop('checked', true); // Set "New Income" as selected
+                document.getElementById('incomeLimitIndicatorLabel').innerText = '';
+                updateIncomeFields();
+            }
+
+            $('#tranferBalanceFromPreviousMonth').text(`The option to transfer the balance amount from the previous month will only be available if the selected month is the current month.`);
+        }
+    }
+
+    function calculateTotalIcomeandSpend() {
+
+        // Get selected date range from the #dateRange input field
+        let selectedRange = document.getElementById("dateRange").value;  // Get the value from the #dateRange input
+        let dates = selectedRange.split(' - ');  // Split the value into start and end dates
+
+        // Parse the start and end dates using moment.js
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');  // Parse the start date
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');    // Parse the end date
+
+        // Filter and calculate Total Income within the selected date range
+        let totalIncomeInRange = userMasterData.TotalIncome
+            .filter(income => moment(income.DateTime).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]'))  // Filter between dates
+            .reduce((sum, income) => sum + income.Amount, 0);  // Calculate total income in range
+
+        // Filter and calculate Total Spend within the selected date range
+        let totalSpendInRange = userMasterData.TotalSpend
+            .filter(spend => moment(spend.Date).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]'))  // Filter between dates
+            .reduce((sum, spend) => sum + spend.Amount, 0);  // Calculate total spend in range
+
+
+        document.getElementById("totalIncomeInput").value = totalIncomeInRange.toLocaleString();
+        document.getElementById("totalSpendfrombothIncomeandSavings").value = totalSpendInRange.toLocaleString();
+
+        let alltotalIncome = userMasterData.TotalIncome
+            .reduce((sum, income) => sum + income.Amount, 0);
+
+        let ALLtotalSpendfromIncome = 0;
+        userMasterData.TotalSpend.forEach(spend => {
+            if (spend.source !== 'savings') {
+                ALLtotalSpendfromIncome += spend.Amount;  // Sum only for income source but not from savings because we calculate only amount we spend from income
+            }
+        });
+
+
+        //remaining from income
+        let remaindingfromIcomeInRange = (totalIncomeInRange - totalSpendInRange);
+        document.getElementById("remainingfromIncome").value = remaindingfromIcomeInRange.toLocaleString();
+
+
+        let allRemaindingfromIcome = (alltotalIncome - ALLtotalSpendfromIncome);
+        document.getElementById("totalBalancefromIncome").value = allRemaindingfromIcome.toLocaleString();
+
+
+        // 1. Sum of all "Savings"
+        let ALLtotalSavings = userMasterData.TotalSpend
+            .filter(spend => spend.Category === "Savings")
+            .reduce((sum, spend) => sum + spend.Amount, 0);  // Calculate total savings
+
+        let allTransferedSavings = userMasterData.TotalSpend
+            .filter(spend => spend.Category === "SavingsTransferred")
+            .reduce((sum, spend) => sum + spend.Amount, 0);
+
+        // Now calculate total remaining amount
+        let allTotalSavedAmount = (ALLtotalSavings - allTransferedSavings)
+
+        document.getElementById("allTotalsoforsavings").value = allTotalSavedAmount.toLocaleString();
+
+
+        //2. Calculate the total savings within the selected date range
+        let totalSavingsInRange = userMasterData.TotalSpend
+            .filter(spend => spend.Category === "Savings" &&
+                moment(spend.Date).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]'))
+            .reduce((sum, spend) => sum + spend.Amount, 0);
+
+        let totalTransferedSavingsInRange = userMasterData.TotalSpend
+            .filter(spend => spend.Category === "SavingsTransferred" &&
+                moment(spend.Date).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]'))
+            .reduce((sum, spend) => sum + spend.Amount, 0);
+
+        // Now calculate total remaining amount in the selected daterange
+        let TotalSavedAmountInRange = (totalSavingsInRange - totalTransferedSavingsInRange);
+
+        document.getElementById("totalsavingsInRange").value = TotalSavedAmountInRange.toLocaleString();
+
+        //Re-Load budget Comparision
+        BudgetVsActual();
+
+        //Re-Load SpendChart
+        loadSpendChart();
+    }
+
+    //****************************************************************************************************************************************************** */
+    //Commmon functions End
+    //****************************************************************************************************************************************************** */
+
+
+    $(document).ready(function () {
+
+        // Generate date ranges for the last two years
+        var ranges = getLastTwoYearsRanges();
+
+        // Set the default range to the current month
+        var defaultRange = ranges[0];
+
+        // Initialize the date range picker with the default selection
+        $('#dateRange').daterangepicker({
+            startDate: defaultRange.start,
+            endDate: defaultRange.end,
+            locale: {
+                format: 'MM/DD/YYYY',
+                cancelLabel: 'Clear',
+                applyLabel: 'Apply'
+            },
+            opens: 'right',
+        });
+
+        updateSelectedDateRange(defaultRange.start, defaultRange.end);
+
+        fetchBudgetData();
+
+        // Populate the dropdown with dynamically generated date ranges
+        var $budgetPeriod = $('#budgetPeriod');
+        ranges.forEach((range, index) => {
+            $budgetPeriod.append(
+                $('<option>', { value: index }).text(range.label)
+            );
+        });
+
+        // Handle budget period selection changes
+        $('#budgetPeriod').on('change', function () {
+            var selectedIndex = $(this).val();
+            var selectedRange = ranges[selectedIndex];
+
+            if (selectedRange) {
+                // Update the date range picker with new dates
+                $('#dateRange').data('daterangepicker').setStartDate(selectedRange.start);
+                $('#dateRange').data('daterangepicker').setEndDate(selectedRange.end);
+
+                // Update the selected date range display
+                updateSelectedDateRange(selectedRange.start, selectedRange.end);
+            } else {
+                // Handle custom range separately
+                var customStart = moment().startOf('month');
+                var customEnd = moment();
+
+                $('#dateRange').data('daterangepicker').setStartDate(customStart);
+                $('#dateRange').data('daterangepicker').setEndDate(customEnd);
+
+                // Update the selected date range display with custom range
+                updateSelectedDateRange(customStart, customEnd);
+            }
+
+            calculateTotalIcomeandSpend();
+            updateIncomeTable();
+            updateSpendingTable();
+        });
+
+        // Handle date range changes
+        $('#dateRange').on('apply.daterangepicker', function (ev, picker) {
+            var selectedPeriod = $('#budgetPeriod').val();
+
+            if (selectedPeriod !== 'Custom Range') {
+                $('#budgetPeriod').val('Custom Range').change();
+            }
+
+            calculateTotalIcomeandSpend();
+        });
+
+    });
+
+    // Declare spendChart and budgetChart globally
+    var spendChart;
+    var budgetChart;
+
+    // Declare a global color mapping object
+    var categoryColors = {};
+
+    // Function to get the color for a category (and store it if not already stored)
+    function getCategoryColor(category) {
+        if (!categoryColors[category]) {
+            categoryColors[category] = getRandomColor(); // Assign a random color if not already set
+        }
+        return categoryColors[category];
+    }
+
+    function loadSpendChart() {
+        let selectedRange = document.getElementById("dateRange").value;
+        let dates = selectedRange.split(' - ');
+
+        // Parse the start and end dates using moment.js
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');  // Parse the start date
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');    // Parse the end date
+
+        // Step 1: Filter TotalSpend by date range
+        const filteredSpend = userMasterData.TotalSpend.filter(spend =>
+            moment(spend.Date).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]')
+        );
+
+        // Step 2: Group spend by category and sum amounts
+        const spendByCategory = filteredSpend.reduce((acc, spend) => {
+            if (!acc[spend.Category]) {
+                acc[spend.Category] = { totalAmount: 0 };
+            }
+            acc[spend.Category].totalAmount += spend.Amount;
+            return acc;
+        }, {});
+
+        // Step 3: Extract labels, data, backgroundColor, and hoverBackgroundColor
+        const labels = Object.keys(spendByCategory);
+        const data = labels.map(label => spendByCategory[label].totalAmount);
+        const backgroundColor = labels.map(label => getCategoryColor(label)); // Use consistent colors from categoryColors
+        const hoverBackgroundColor = [...backgroundColor];
+
+        // Example for Spend Chart
+        var ctxSpend = document.getElementById('spendChart').getContext('2d');
+
+        // Destroy the existing chart if it exists
+        if (spendChart) {
+            spendChart.destroy();
+        }
+
+        // Create a new chart
+        spendChart = new Chart(ctxSpend, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: backgroundColor,
+                    hoverBackgroundColor: hoverBackgroundColor
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+
+    function BudgetConfigurationChart() {
+        // Example for Budget Plan Bar Chart
+        var ctxBudget = document.getElementById('budgetChart').getContext('2d');
+
+        // Destroy the existing chart if it exists
+        if (budgetChart) {
+            budgetChart.destroy();
+        }
+
+        // Data and colors for each category
+        var budgetingCategorie = userMasterData.BudgetingCategorie;
+        var budgetCategoriePercetage = userMasterData.BudgetCategoriePercentage;
+
+        // Use consistent colors for each category
+        var colors = budgetingCategorie.map(category => getCategoryColor(category));
+
+        budgetChart = new Chart(ctxBudget, {
+            type: 'bar',
+            data: {
+                labels: budgetingCategorie,
+                datasets: [{
+                    label: 'Percentage',
+                    data: budgetCategoriePercetage,
+                    backgroundColor: colors
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                        position: 'top',
+                        labels: {
+                            boxWidth: 20,
+                            padding: 15
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            // Format ticks as percentage
+                            callback: function (value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+    //************************************************************************************************************************************************ */
+    // Currency change
+    //************************************************************************************************************************************************ */
+
+    function handleCurrencyChange(selectedCurrency, selectedSymbol) {
+
+        const currencySelect = document.getElementById('currency');
+        selectedCurrencySym = currencySelect.options[currencySelect.selectedIndex].innerHTML.split(' ')[0]; // Get the first part which is the symbol
+
+        userMasterData.SelectedCurrency = selectedCurrency;
+
+        updateCurrencySymbol();
+
+        //SaveUserData
+        SaveUserData();
+    }
+
+    function updateCurrencySymbol() {
+        document.getElementById('incomeTitleCard').textContent = `Selected Month Income ${selectedCurrencySym}`;
+        document.getElementById('spendTitleCard').textContent = `Selected Month Spend ${selectedCurrencySym}`;
+        document.getElementById('balanceTitleCard').textContent = `Selected Month Balance ${selectedCurrencySym}`;
+        document.getElementById('savingsTitleCard').textContent = `Selected Month Savings ${selectedCurrencySym}`;
+    }
+
+    //************************************************************************************************************************************************ */
+    // Currency change
+    //************************************************************************************************************************************************ */
+
+
+    //************************************************************************************************************************************************ */
+    // Budget vs Actual graph
+    //************************************************************************************************************************************************ */
+
+    // Declare a variable to hold the chart instance
+    let comparisonChart;
+
+    function BudgetVsActual() {
+
+        let selectedRange = document.getElementById("dateRange").value;
+        let dates = selectedRange.split(' - ');
+
+        // Parse the start and end dates using moment.js
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');  // Parse the start date
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');    // Parse the end date
+
+        let budgetingCategorie = userMasterData.BudgetingCategorie;
+
+        // Step 1: Filter TotalSpend by selected date range
+        let filteredSpend = userMasterData.TotalSpend.filter(spend =>
+            moment(spend.Date).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]')
+        );
+
+        let totalIncome = userMasterData.TotalIncome
+            .filter(income => moment(income.DateTime).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]'))  // Filter between dates
+            .reduce((sum, income) => sum + income.Amount, 0);
+
+        // Step 2: Group TotalSpend by category and sum the amounts
+        let spendByCategory = {};
+        filteredSpend.forEach(spend => {
+            if (!spendByCategory[spend.Category]) {
+                spendByCategory[spend.Category] = 0;
+            }
+            spendByCategory[spend.Category] += spend.Amount;
+        });
+
+        // Step 3: Ensure all categories from budgetingCategorie are present, with 0 if not found
+        let ActulaTotalSpend = budgetingCategorie.map(category => {
+            return spendByCategory[category] ? spendByCategory[category] : 0;
+        });
+
+        // Step 4: Calculate percentage of each category based on total income
+        let ActulaTotalSpendPercentage = ActulaTotalSpend.map(spend => {
+            return ((spend / totalIncome) * 100).toFixed(2);  // Convert to percentage and format to two decimal places
+        });
+
+        var ctxactualVSbudget = document.getElementById('actualChart').getContext('2d');
+
+        // Destroy the existing chart if it exists
+        if (comparisonChart) {
+            comparisonChart.destroy();
+        }
+
+        // Budget and Actual Data
+        var budgetData = userMasterData.BudgetCategoriePercentage;
+
+        var actualData = ActulaTotalSpendPercentage;
+        let maxactualPercentage = (Math.max(...ActulaTotalSpendPercentage.map(Number)));
+        maxactualPercentage = roundUpToNearestFive(maxactualPercentage)
+
+        // Generate colors for both datasets
+        var colors = '#F5A623';
+        var colorsActual = '#4A90E2';
+
+        // Create the comparison chart
+        comparisonChart = new Chart(ctxactualVSbudget, {
+            type: 'bar',
+            data: {
+                labels: userMasterData.BudgetingCategorie,
+                datasets: [
+                    {
+                        label: 'Budget',
+                        data: budgetData,
+                        backgroundColor: colors, // Color for budget
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Actual',
+                        data: actualData,
+                        backgroundColor: colorsActual, // Color for actual
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true, // Show legend for both Budget and Actual
+                        position: 'top', // Position the legend at the top
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            // Format ticks as percentage
+                            callback: function (value) {
+                                return value + '%';
+                            }
+                        },
+                        max: maxactualPercentage // Set maximum y-axis value, adjust as needed
+                    }
+                }
+            }
+        });
+    }
+
+
+    //************************************************************************************************************************************************ */
+    // budget Management
+    //************************************************************************************************************************************************ */
+
+    let deleteIndex = null;
+
+    function initializeCategories() {
+        const container = document.getElementById('categoriesContainer');
+        container.innerHTML = ''; // Clear previous content
+
+        userMasterData.BudgetingCategorie.forEach((categoryName, i) => {
+            let deleteButton = '';
+
+            if (categoryName !== 'Savings') {
+                deleteButton = `
+                                                        <button type="button" class="btn btn-danger btn-sm delete-category" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" onclick="setDeleteIndex(${i})">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    `;
+            }
+
+            container.innerHTML += `
+                                            <div class="mb-3 d-flex flex-column flex-md-row justify-content-between align-items-center border-bottom pb-2" id="category-${i}">
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex flex-column">
+                                                        <label class="form-label mb-1">${categoryName}</label>
+                                                        <div class="d-flex flex-column flex-md-row align-items-center">
+                                                            <input type="range" class="form-range budget-input w-100 me-0 me-md-2 mb-2 mb-md-0" data-index="${i}" value="${userMasterData.BudgetCategoriePercentage[i]}" min="0" max="100" step="0.01" onchange="updateInputValue(${i}, this.value)">
+                                                            <input type="number" class="form-control percentage-value w-100 w-md-auto" id="percentage-${i}" value="${userMasterData.BudgetCategoriePercentage[i]}" min="0" max="100" step="0.01" oninput="updateRangeValue(${i}, this.value)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ms-md-3 mt-2 mt-md-0">${deleteButton}</div>
+                                            </div>
+                                        `;
+        });
+
+        updateTotal(); // Ensure this is called after elements are created
+    }
+
+    // Update the percentage input field when the range slider is changed
+    function updateInputValue(index, value) {
+        document.getElementById('percentage-' + index).value = parseFloat(value).toFixed(2);
+        userMasterData.BudgetCategoriePercentage[index] = parseFloat(value);
+        updateTotal();
+    }
+
+    // Update the range slider when the percentage input field is changed
+    function updateRangeValue(index, value) {
+        const rangeInput = document.querySelector(`.budget-input[data-index="${index}"]`);
+        rangeInput.value = value;
+        userMasterData.BudgetCategoriePercentage[index] = parseFloat(value);
+        updateTotal();
+    }
+
+
+    function setDeleteIndex(index) {
+        deleteIndex = index; // Store the index to be deleted
+        const categoryName = userMasterData.BudgetingCategorie[deleteIndex];
+
+        // Check if the category exists in TotalSpend
+        const isCategoryUsed = userMasterData.TotalSpend.some(spending => spending.Category === categoryName);
+
+        const modalBody = document.querySelector("#deleteConfirmModal .modal-body");
+        const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+
+        if (isCategoryUsed) {
+            // If category has spending, show reason and disable the delete button
+            modalBody.innerHTML = `
+                                                    <p>This category has recorded spending and cannot be deleted.</p>
+                                                    <small class="text-muted">You have spent on this category in the past. Therefore, deletion is not allowed.</small>
+                                                `;
+            confirmDeleteBtn.disabled = true; // Disable the delete button
+        } else {
+            // If category has no spending, allow deletion
+            modalBody.innerHTML = `Are you sure you want to delete the category <strong>${categoryName}</strong>?`;
+            confirmDeleteBtn.disabled = false; // Enable the delete button
+        }
+    }
+
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+        if (deleteIndex !== null) {
+            deleteCategory(deleteIndex);
+
+            // Simulate a click on the close button
+            const closeButton = document.querySelector('.confirmationClose[data-bs-dismiss="modal"]');
+            if (closeButton) {
+                closeButton.click();
+            }
+
+            deleteIndex = null; // Reset the index
+        }
+    });
+
+    function deleteCategory(index) {
+        userMasterData.BudgetingCategorie.splice(index, 1); // Example to remove from budgetingCategorie
+        userMasterData.BudgetCategoriePercentage.splice(index, 1); // Example to remove from data
+        //SaveUserData
+        SaveUserData();
+        showSuccessToast("Deleted successfully!");
+        initializeCategories(); // Re-initialize to update the display
+    }
+
+    // Update total percentage and data array
+    function updateTotal() {
+        var total = 0;
+        document.querySelectorAll('.budget-input').forEach(input => {
+            var index = input.getAttribute('data-index');
+            var value = parseFloat(input.value);
+            total += value;
+            userMasterData.BudgetCategoriePercentage[index] = value;  // Update the corresponding percentage in the `data` array
+            document.getElementById('percentage-' + index).innerText = value.toFixed(2) + '%';  // Update percentage display
+        });
+        document.getElementById('totalPercentage').innerText = total.toFixed(2) + '%';
+
+        // Validate total
+        if (total === 100) {
+            document.getElementById('errorAlert').classList.add('d-none');
+            document.getElementById('saveBudgetBtn').disabled = false;
+        } else {
+            document.getElementById('errorAlert').classList.remove('d-none');
+            document.getElementById('saveBudgetBtn').disabled = true;
+        }
+    }
+
+    // Show add category form
+    document.getElementById('addCategoryBtn').addEventListener('click', function () {
+        document.getElementById('addCategoryForm').classList.toggle('d-none');
+    });
+
+    // Handle adding new category
+    document.getElementById('addCategorySubmit').addEventListener('click', function () {
+        var categoryName = document.getElementById('newCategoryName').value.trim();
+        var categoryPercentage = parseFloat(document.getElementById('newCategoryPercentage').value);
+
+        // Ensure valid input
+        if (!categoryName || isNaN(categoryPercentage) || categoryPercentage < 0 || categoryPercentage > 100) {
+            document.getElementById('newCategoryError').innerText = 'Invalid category name or percentage!';
+            document.getElementById('newCategoryError').classList.remove('d-none');
+            return;
+        }
+
+        // Check if the category already exists
+        if (userMasterData.BudgetingCategorie.includes(categoryName)) {
+            document.getElementById('newCategoryError').innerText = 'Category already exists!';
+            document.getElementById('newCategoryError').classList.remove('d-none');
+            return;
+        }
+
+        var currentTotal = 0;
+        document.querySelectorAll('.budget-input').forEach(input => {
+            currentTotal += parseFloat(input.value);
+        });
+
+        if (currentTotal + categoryPercentage > 100) {
+            document.getElementById('newCategoryError').innerText = 'The total percentage exceeds 100%! Please adjust by reducing the percentage of any category';
+            document.getElementById('newCategoryError').classList.remove('d-none');
+            return;
+        }
+
+        // Hide error and add category
+        document.getElementById('newCategoryError').classList.add('d-none');
+
+        // Add new category to data
+        userMasterData.BudgetingCategorie.push(categoryName);
+        userMasterData.BudgetCategoriePercentage.push(categoryPercentage);
+
+        //SaveUserData
+        SaveUserData();
+        showSuccessToast("Added successfully!");
+        // Re-initialize categories
+        initializeCategories();
+
+        // Clear the form
+        document.getElementById('newCategoryName').value = '';
+        document.getElementById('newCategoryPercentage').value = '';
+        document.getElementById('addCategoryForm').classList.add('d-none');
+    });
+
+    // Update total and data array when input changes
+    document.addEventListener('input', function (e) {
+        if (e.target && e.target.classList.contains('budget-input')) {
+            updateTotal();
+        }
+    });
+
+    // Initialize on modal open
+    document.getElementById('budgetModal').addEventListener('show.bs.modal', initializeCategories);
+
+    // Save button click
+    document.getElementById('saveBudgetBtn').addEventListener('click', function () {
+        if (!document.getElementById('saveBudgetBtn').disabled) {
+            // Collect updated data from the form
+            var updatedbudgetCategorie = [];
+            var updatedBudgetCategoriePercentage = [];
+
+
+            //Store previous values
+            updatedbudgetCategorie = userMasterData.BudgetingCategorie;
+            updatedBudgetCategoriePercentage = userMasterData.BudgetCategoriePercentage;
+
+            // Clear the arrays
+            userMasterData.BudgetingCategorie = [];
+            userMasterData.BudgetCategoriePercentage = [];
+
+            document.querySelectorAll('.budget-input').forEach(input => {
+                var index = input.getAttribute('data-index');
+                var category = updatedbudgetCategorie[index];
+                var percentage = parseFloat(input.value);
+
+                // Push the category and percentage into the cleared arrays
+                userMasterData.BudgetingCategorie.push(category);
+                userMasterData.BudgetCategoriePercentage.push(percentage);
+            });
+
+            //SaveUserData
+            SaveUserData();
+            showSuccessToast("Saved successfully!");
+
+            //Re-load Budget Configuration Chart
+            BudgetConfigurationChart();
+            //Re-load BudgetVsActual
+            BudgetVsActual();
+
+        }
+
+    });
+
+    //********************************************************************************************************************************************************* */
+    // Budget Management end
+    //********************************************************************************************************************************************************* */
+
+    //********************************************************************************************************************************************************* */
+    // Income Mangement
+    //********************************************************************************************************************************************************* */
+
+    // Variable to track the index of the entry being edited (if any)
+    var editIncomeIndex = null;
+
+    // Function to handle fund source selection and update UI elements accordingly
+    document.querySelectorAll('input[name="fundSourceOption"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            updateIncomeFields();
+            handleFundSourceSelection();
+        });
+    });
+
+    function handleFundSourceSelection() {
+
+        const selectedSource = document.querySelector('input[name="fundSourceOption"]:checked').value;
+
+        document.getElementById('incomeAmount').value = '';
+        const startOfCurrentMonth = moment().startOf('month').format('MM/DD/YYYY');
+
+        // Calculate the total income amount less than the selected start date
+        let totalIncomeBeforeStartDate = userMasterData.TotalIncome
+            .filter(income => moment(income.DateTime).startOf('day').isBefore(startOfCurrentMonth, 'day'))  // Filter for dates before startOfCurrentMonth
+            .reduce((sum, income) => sum + income.Amount, 0);
+
+
+        let totalSpendBeforeStartDate = 0;
+        userMasterData.TotalSpend.forEach(spend => {
+            let spendDate = moment(spend.Date); // No need for format here, use the original date format
+            if (spend.source !== 'savings' && spendDate.isBefore(startOfCurrentMonth, 'day')) {
+                totalSpendBeforeStartDate += spend.Amount;
+            }
+        });
+
+        //remaining from income
+        let remainingFromIncome = ((totalIncomeBeforeStartDate) - (totalSpendBeforeStartDate));
+
+
+        // 1. Sum of all "Savings" betweeb the selected date range
+        let ALLtotalSavings = userMasterData.TotalSpend
+            .filter(spend => spend.Category === "Savings")
+            .reduce((sum, spend) => sum + spend.Amount, 0);  // Calculate total savings
+
+        let totalTransferedSavings = userMasterData.TotalSpend
+            .filter(spend => spend.Category === "SavingsTransferred")
+            .reduce((sum, spend) => sum + spend.Amount, 0);
+
+        // Now calculate total remaining amount which is previous to startOfCurrentMonth
+        let totalSavedAmount = (ALLtotalSavings - totalTransferedSavings)
+
+
+        const incomeAmountField = document.getElementById('incomeAmount');
+        // Reset the amount field and label
+        incomeAmountField.disabled = false;
+
+        if (selectedSource === 'income') {
+            incomeAmountField.removeAttribute('max');
+            document.getElementById('incomeLimitIndicatorLabel').innerText = '';
+
+        } else if (selectedSource === 'previousBalance') {
+            if (remainingFromIncome > 0) {
+                document.getElementById('incomeLimitIndicatorLabel').innerText = `Transfer Balance from Previous month (up to ${selectedCurrencySym} ${remainingFromIncome.toFixed(2)} available)`;
+                incomeAmountField.max = remainingFromIncome;
+                calculateAndShowMonthlyTotals();
+                $('#previousBalanceModal').modal('show');
+            } else {
+                document.getElementById('incomeLimitIndicatorLabel').innerText = "No amount is left to transfer from Previous Balance";
+                incomeAmountField.disabled = true;
+            }
+
+        } else if (selectedSource === 'savings') {
+            if (totalSavedAmount > 0) {
+                document.getElementById('incomeLimitIndicatorLabel').innerText = `Transfer from Savings (up to ${selectedCurrencySym} ${totalSavedAmount.toFixed(2)} available)`;
+                incomeAmountField.max = totalSavedAmount;
+                calculateAndShowMonthlySavingsTotals();
+                $('#previousSavingsModal').modal('show');
+            } else {
+                document.getElementById('incomeLimitIndicatorLabel').innerText = "No amount is left to transfer from Savings";
+                incomeAmountField.disabled = true;
+            }
+        }
+
+    }
+
+    function updateIncomeFields() {
+        // Get the currently selected option
+        const selectedOption = $('input[name="fundSourceOption"]:checked').val();
+
+        // Check if the selected option is "income"
+        if (selectedOption === 'income') {
+            // Enable fields for "New Income"
+            $('#incomeNotes').prop('disabled', false);
+            $('#incomeCategory').prop('disabled', false);
+            $('#incomeAmount').prop('disabled', false);
+            $('#addIncomeBtn').prop('disabled', false);
+        } else {
+            // Disable fields for "Transfer from Previous Balance" or "Transfer from Savings"
+            $('#incomeNotes').prop('disabled', true).val('');  // Clear value
+            $('#incomeCategory').prop('disabled', true).val('');  // Clear selection
+            $('#incomeAmount').prop('disabled', true).val('');  // Clear value
+            $('#addIncomeBtn').prop('disabled', true);
+        }
+    }
+
+    function calculateAndShowMonthlyTotals() {
+        const totalSpend = userMasterData.TotalSpend;
+        const totalIncome = userMasterData.TotalIncome;
+
+        // Convert data to monthly totals
+        const monthlyData = {};
+
+        // Populate monthly income totals
+        totalIncome.forEach(entry => {
+            const monthYear = moment(entry.DateTime).format('MMM YYYY');
+            if (!monthlyData[monthYear]) {
+                monthlyData[monthYear] = { totalIncome: 0, totalSpend: 0 };
+            }
+            monthlyData[monthYear].totalIncome += entry.Amount;
+        });
+
+        // Populate monthly spending totals
+        totalSpend.forEach(entry => {
+            const monthYear = moment(entry.Date).format('MMM YYYY');
+            if (!monthlyData[monthYear]) {
+                monthlyData[monthYear] = { totalIncome: 0, totalSpend: 0 };
+            }
+            monthlyData[monthYear].totalSpend += entry.Amount;
+        });
+
+        const tableBody = document.getElementById("monthlyTotalsTableBody");
+        tableBody.innerHTML = ""; // Clear previous rows
+
+        // Get the current month and year
+        const currentMonthYear = moment().format('MMM YYYY');
+
+        for (const [month, totals] of Object.entries(monthlyData)) {
+            const remaining = totals.totalIncome - totals.totalSpend;
+
+            // Create table row
+            const row = `
+                                                            <tr>
+                                                                <td>${month}</td>
+                                                                <td>${totals.totalIncome.toFixed(2)}</td>
+                                                                <td>${totals.totalSpend.toFixed(2)}</td>
+                                                                <td>${remaining.toFixed(2)}</td>
+                                                                <td>
+                                                                    ${month !== currentMonthYear && remaining > 0
+                    ? `<input type="checkbox" class="transferCheckbox" data-month="${month}" data-remaining-amount="${remaining.toFixed(2)}">`
+                    : ''}
+                                                                </td>
+                                                            </tr>`;
+            tableBody.insertAdjacentHTML("beforeend", row);
+        }
+
+        // Attach event listeners for checkboxes after rows are added
+        const checkboxes = document.querySelectorAll('.transferCheckbox');
+        let totalSelectedAmount = 0;
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (event) => {
+                const amount = parseFloat(event.target.getAttribute('data-remaining-amount'));
+                totalSelectedAmount += event.target.checked ? amount : -amount;
+                document.getElementById('totalSelectedAmount').innerText = totalSelectedAmount.toFixed(2);
+            });
+        });
+    }
+
+    function calculateAndShowMonthlySavingsTotals() {
+        const totalSpend = userMasterData.TotalSpend;
+
+        // Filter to get only "Savings" and "SavingsTransferred" categories
+        const savingsEntries = totalSpend.filter(entry => entry.Category === "Savings");
+        const savingsTransferredEntries = totalSpend.filter(entry => entry.Category === "SavingsTransferred");
+
+        // Group savings entries by month and calculate total savings per month
+        const monthlySavingsTotals = savingsEntries.reduce((acc, entry) => {
+            const monthYear = moment(entry.Date).format('MMM YYYY');
+            if (!acc[monthYear]) {
+                acc[monthYear] = 0;
+            }
+            acc[monthYear] += entry.Amount;
+            return acc;
+        }, {});
+
+        // Group SavingsTransferred entries by month and calculate total transferred per month
+        const monthlySavingsTransferredTotals = savingsTransferredEntries.reduce((acc, entry) => {
+            const monthYear = moment(entry.Date).format('MMM YYYY');
+            if (!acc[monthYear]) {
+                acc[monthYear] = 0;
+            }
+            acc[monthYear] += entry.Amount;
+            return acc;
+        }, {});
+
+        // Calculate remaining savings by subtracting transferred amounts from savings totals
+        const remainingMonthlySavings = {};
+        Object.keys(monthlySavingsTotals).forEach(monthYear => {
+            const totalSavings = monthlySavingsTotals[monthYear] || 0;
+            const transferredAmount = monthlySavingsTransferredTotals[monthYear] || 0;
+            const remainingAmount = totalSavings - transferredAmount;
+
+            // Only add entries where remainingAmount is greater than 0
+            if (remainingAmount > 0) {
+                remainingMonthlySavings[monthYear] = remainingAmount;
+            }
+        });
+
+        // Get the current month and year
+        const currentMonthYear = moment().format('MMM YYYY');
+
+        const tableBody = document.getElementById("monthlySavingsTableBody");
+        tableBody.innerHTML = ""; // Clear previous rows
+
+        // Loop over the remaining monthly savings and create a row for each
+        Object.entries(remainingMonthlySavings)
+            .sort((a, b) => moment(b[0], 'MMM YYYY') - moment(a[0], 'MMM YYYY')) // Sort by date descending
+            .forEach(([monthYear, remainingAmount]) => {
+                const row = `
+                                                        <tr>
+                                                            <td>${monthYear}</td>
+                                                            <td>${remainingAmount.toFixed(2)}</td>
+                                                            <td>
+                                                                ${monthYear !== currentMonthYear
+                        ? `<input type="checkbox" class="savingsCheckbox" data-savings-month="${monthYear}" data-savings-amount="${remainingAmount}">`
+                        : ''}
+                                                            </td>
+                                                        </tr>
+                                                    `;
+                tableBody.insertAdjacentHTML("beforeend", row);
+            });
+
+        // Attach event listeners to checkboxes to calculate the total amount
+        const checkboxes = document.querySelectorAll('.savingsCheckbox');
+        let totalSelectedAmount = 0;
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (event) => {
+                const amount = parseFloat(event.target.getAttribute('data-savings-amount'));
+                totalSelectedAmount += event.target.checked ? amount : -amount;
+                document.getElementById('totalSelectedSavingsAmount').innerText = totalSelectedAmount.toFixed(2);
+            });
+        });
+    }
+
+
+    document.getElementById('icometransferButton').addEventListener('click', () => {
+        const selectedCheckboxes = document.querySelectorAll('.transferCheckbox:checked');
+        const currentDateTime = moment().toISOString();
+        const currentMonthYear = moment().format('MMMM YYYY');
+
+        selectedCheckboxes.forEach(checkbox => {
+            const monthYear = checkbox.getAttribute('data-month');
+            const amount = parseFloat(checkbox.getAttribute('data-remaining-amount'));
+
+            // Parse month and year from monthYear and get the last day of that month
+            const [month, year] = monthYear.split(' ');
+            const lastDayOfMonth = moment(`${month} ${year}`, 'MMMM YYYY').endOf('month');
+
+            // Format last day of the month for the date
+            const formattedDate = `${lastDayOfMonth.toISOString().split('T')[0]}T${String(lastDayOfMonth.hour()).padStart(2, '0')}:${String(lastDayOfMonth.minute()).padStart(2, '0')}`;
+            // Add an entry to TotalSpend
+            userMasterData.TotalSpend.push({
+                date: formattedDate,
+                notes: `Transferred to ${currentMonthYear}`,
+                category: "IncomeTransferred",
+                amount: amount,
+                source: "PreviousMonthBalanceIncome"
+            });
+
+            // Add a corresponding entry to TotalIncome
+            userMasterData.TotalIncome.push({
+                dateTime: currentDateTime,
+                notes: `Income amount Transferred from ${monthYear}`,
+                category: "TransferredIncome",
+                amount: amount
+            });
+        });
+
+        // Reset the amount after transferring and close the modal
+        totalSelectedAmount = 0;
+        document.getElementById('totalSelectedAmount').innerText = "0.00";
+        const modal = bootstrap.Modal.getInstance(document.getElementById('previousBalanceModal'));
+        modal.hide();
+        //SaveUserData
+        SaveUserData();
+        showSuccessToast("Transferred successfully!");
+        //Re-Load the income table
+        updateIncomeTable();
+    });
+
+
+    document.getElementById('savingsTransferButton').addEventListener('click', () => {
+        const selectedCheckboxes = document.querySelectorAll('.savingsCheckbox:checked');
+        const currentDateTime = moment().toISOString();
+        const currentMonthYear = moment().format('MMMM YYYY');
+
+        selectedCheckboxes.forEach(checkbox => {
+            const monthYear = checkbox.getAttribute('data-savings-month');
+            const amount = parseFloat(checkbox.getAttribute('data-savings-amount'));
+
+            // Parse month and year from monthYear and get the last day of that month
+            const [month, year] = monthYear.split(' ');
+            const lastDayOfMonth = moment(`${month} ${year}`, 'MMMM YYYY').endOf('month');
+
+            // Format last day of the month for the date
+            const formattedDate = `${lastDayOfMonth.toISOString().split('T')[0]}T${String(lastDayOfMonth.hour()).padStart(2, '0')}:${String(lastDayOfMonth.minute()).padStart(2, '0')}`;
+
+            // Add an entry to TotalSpend
+            userMasterData.TotalSpend.push({
+                date: formattedDate,
+                notes: `Transferred to ${currentMonthYear}`,
+                category: "SavingsTransferred",
+                amount: amount,
+                source: "PreviousMonthSavings"
+            });
+
+            // Add a corresponding entry to TotalIncome
+            userMasterData.TotalIncome.push({
+                dateTime: currentDateTime,
+                notes: `Savings amount Transferred from ${monthYear}`,
+                category: "TransferredSavings",
+                amount: amount
+            });
+        });
+
+        // Reset the amount after transferring and close the modal
+        totalSelectedAmount = 0;
+        document.getElementById('totalSelectedSavingsAmount').innerText = "0.00";
+        const modal = bootstrap.Modal.getInstance(document.getElementById('previousSavingsModal'));
+        modal.hide();
+
+        //SaveUserData
+        SaveUserData();
+        showSuccessToast("Transfered successfully!");
+        //Re-Load the income table
+        updateIncomeTable();
+    });
+
+
+    // Set current date and time when the modal is about to be shown
+    document.getElementById('incomeModal').addEventListener('show.bs.modal', function () {
+        setIncomeDateRange();
+        //to clear if any existing edit items 
+        cancelIncomeEdit();
+    });
+
+
+    // Function to set min and max date range on the incomeDateTime input
+    function setIncomeDateRange() {
+        // Get selected date range from the #dateRange input field
+        let selectedRange = document.getElementById("dateRange").value;
+
+        // Split the value into start and end dates
+        let dates = selectedRange.split(' - ');
+
+        // Parse the start and end dates using moment.js
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');
+
+        // Get the incomeDateTime input
+        const incomeDateTimeInput = document.getElementById('incomeDateTime');
+
+        // Set the min and max attributes with the selected range
+        incomeDateTimeInput.min = selectedStartDate.format('YYYY-MM-DDT00:00');
+        incomeDateTimeInput.max = selectedEndDate.format('YYYY-MM-DDT23:59');
+
+        // Set the current date within the selected range
+        let now = moment();
+
+        // Ensure the default value falls within the selected date range
+        if (now.isBefore(selectedStartDate)) {
+            now = selectedEndDate;
+        } else if (now.isAfter(selectedEndDate)) {
+            now = selectedStartDate;
+        }
+
+        // Set the 'incomeDateTime' field to the current date or within the range
+        incomeDateTimeInput.value = now.format('YYYY-MM-DDTHH:mm');
+    }
+
+    function setLocalizedDateTime() {
+        let now = moment();
+
+        // Get the user's local time zone, formatted for 'datetime-local' input
+        let year = now.year();
+        let month = now.format('MM'); // Month with leading zero
+        let day = now.format('DD'); // Day with leading zero
+        let hours = now.format('HH'); // Hours with leading zero (24-hour format)
+        let minutes = now.format('mm'); // Minutes with leading zero
+
+        // Combine into the format 'YYYY-MM-DDTHH:MM' for the 'datetime-local' input
+        let formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+        // Set the value of the 'datetime-local' input field
+        return formattedDateTime;
+    }
+
+    // Add Income Entry
+    document.getElementById('addIncomeBtn').addEventListener('click', function () {
+
+        const selectedSource = document.querySelector('input[name="fundSourceOption"]:checked').value;
+        const enteredamount = parseFloat(document.getElementById('incomeAmount').value);
+
+        if (enteredamount < 0) {
+            showWarningToast("Entered amount should not be less than zero.");
+            return false;
+        }
+        // Ensure the amount does not exceed the remaining allowed based on the selected source
+        if (selectedSource === 'previousBalance' || selectedSource === 'savings') {
+            const maxAmount = parseFloat(document.getElementById('incomeAmount').max);
+            if (enteredamount > maxAmount) {
+                showWarningToast(`Amount cannot exceed ${selectedCurrencySym}${maxAmount.toFixed(2)} for the selected source.`);
+                return;
+            }
+        }
+
+        const dateTime = document.getElementById('incomeDateTime').value;
+        const notes = document.getElementById('incomeNotes').value;
+        const category = document.getElementById('incomeCategory').value;
+        const amount = document.getElementById('incomeAmount').value;
+
+        // Validate the fields (e.g., all fields should have values)
+        if (!dateTime || !notes || !category || !amount) {
+            showWarningToast('Please fill all fields');
+            return;
+        }
+
+        let newIncome = {
+            DateTime: dateTime,
+            Notes: notes,
+            Category: category,
+            Amount: parseFloat(amount)
+        };
+
+        if (editIncomeIndex !== null) {
+            // Update existing entry
+            IncomeSource[editIncomeIndex] = newIncome;
+            editIncomeIndex = null;  // Reset the edit index after updating
+            document.getElementById('addIncomeBtn').innerText = 'Add Income';
+        } else {
+            // Add the new income entry to the array
+            IncomeSource.push(newIncome);
+        }
+
+        // Reset the form fields
+        document.getElementById('incomeNotes').value = '';
+        document.getElementById('incomeAmount').value = '';
+        //SaveUserData
+        SaveUserData();
+        showSuccessToast("Added successfully!");
+        // Update the income table displayed in the modal
+        updateIncomeTable();
+
+        //Re-Load Pending income
+        handleFundSourceSelection()
+    });
+
+    // Function to update the income table displayed in the modal
+    function updateIncomeTable() {
+        userMasterData.TotalIncome = IncomeSource;
+        // Get the selected date range from the input
+        let selectedRange = document.getElementById("dateRange").value;
+        let dates = selectedRange.split(' - ');
+
+        // Parse the start and end dates using moment.js
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');
+
+        // Clear current table
+        const incomeTableBody = document.getElementById('incomeTableBody');
+        incomeTableBody.innerHTML = '';
+
+        // Loop through IncomeSource and filter by date range before displaying
+        IncomeSource.forEach((income, index) => {
+            // Check if income date is within the selected range
+            let incomeDate = moment(income.DateTime).startOf('day');
+            if (incomeDate.isBetween(selectedStartDate, selectedEndDate, undefined, '[]')) {
+                let row = document.createElement('tr');
+
+                // Determine if the buttons should be disabled
+                const isTransferredIncome = income.Category === "TransferredIncome" || income.Category === "TransferredSavings";
+                const editButton = isTransferredIncome
+                    ? ``
+                    : `<button class="btn btn-sm btn-warning me-2" onclick="editIncome(${index})">Edit</button>`;
+                const deleteButton = isTransferredIncome
+                    ? ``
+                    : `<button class="btn btn-sm btn-danger" onclick="deleteIncome(${index})">Delete</button>`;
+
+                // Create table row with income details
+                row.innerHTML = `
+                                                                        <td>${moment(incomeDate).format('DD/MM/YYYY hh:mm A')}</td>
+                                                                    <td>${income.Notes}</td>
+                                                                    <td>${income.Category}</td>
+                                                                        <td>${selectedCurrencySym}${income.Amount.toFixed(2)}</td>
+                                                                    <td>
+                                                                        ${editButton}
+                                                                        ${deleteButton}
+                                                                    </td>
+                                                        `;
+
+                // Append the row to the table body
+                incomeTableBody.appendChild(row);
+            }
+        });
+
+
+        //Re-Load Income Datatable
+        populateIncomeTable();
+        //Re-Calculate and Display Icome
+        calculateTotalIcomeandSpend();
+    }
+
+    // Function to delete an income entry
+    function deleteIncome(index) {
+
+
+
+        if (confirm('Are you sure you want to delete this entry?')) {
+            IncomeSource.splice(index, 1); // Remove entry from array
+            //SaveUserData
+            SaveUserData();
+            showSuccessToast("Deleted successfully!");
+
+            updateIncomeTable(); // Update table display
+        }
+    }
+
+    // Function to edit an income entry (simple example to prefill fields)
+    function editIncome(index) {
+
+        document.getElementById('addIncomeBtn').innerText = 'Update Income';
+
+        const income = IncomeSource[index];
+        document.getElementById('incomeDateTime').value = income.DateTime;
+        document.getElementById('incomeNotes').value = income.Notes;
+        document.getElementById('incomeCategory').value = income.Category;
+        document.getElementById('incomeAmount').value = income.Amount;
+
+        // Ensure the "New Income" checkbox is selected
+        document.getElementById('incomeOption').checked = true; // Select "New Income"
+        document.getElementById('previousBalanceOption').checked = false; // Unselect Transfer from Previous Balance
+        document.getElementById('savingsOption').checked = false; // Unselect Transfer from Savings
+        updateIncomeFields();
+
+        // Set the index of the entry being edited
+        editIncomeIndex = index;
+    }
+
+    function cancelIncomeEdit() {
+        // Reset the form fields
+        document.getElementById('incomeNotes').value = '';
+        document.getElementById('incomeAmount').value = '';
+        // Reset editSpendingIndex
+        editIncomeIndex = null;
+        // Change button text back to "Add Spend" and hide the cancel button
+        document.getElementById('addIncomeBtn').innerText = 'Add Income';
+        setIncomeDateRange();
+    }
+    //********************************************************************************************************************************************************* */
+    // Income Mangement End
+    //********************************************************************************************************************************************************* */
+
+    //********************************************************************************************************************************************************* */
+    // Spend Mangement
+    //********************************************************************************************************************************************************* */
+
+    // Function to update the spending category dropdown based on the selected spending source
+    function updateSpendingCategoryDropdown() {
+        const spendingCategorySelect = document.getElementById('spendCategory');
+        spendingCategorySelect.innerHTML = ''; // Clear previous options
+        const spendSource = document.querySelector('input[name="spendSource"]:checked').value;
+
+        // Filter categories based on the selected spend source
+        const filteredCategories = spendSource === 'savings'
+            ? spendCategory.filter(Category => Category !== 'Savings')
+            : spendCategory;
+
+        filteredCategories.forEach(Category => {
+            let option = document.createElement('option');
+            option.text = Category;
+            option.value = Category;
+            spendingCategorySelect.add(option);
+        });
+
+    }
+
+    // Populate the spending category dropdown and set current date when the modal is about to be shown
+    document.getElementById('spendingModal').addEventListener('show.bs.modal', function () {
+
+        // Set the default date field to the current date
+        document.getElementById('spendDateTime').value = setLocalizedDateTime();
+
+        // set the date validation in the spend model
+        setSpendDateRange();
+
+        // Set initial options based on the default selection
+        updateSpendingCategoryDropdown();
+
+        // Load Spend for the day Grid
+        updateSpendingTable();
+
+        //clear existing fiels if any edit items exists
+        cancelEdit();
+    });
+
+    // Attach the update function to the radio button change event
+    document.querySelectorAll('input[name="spendSource"]').forEach(radio => {
+        radio.addEventListener('change', updateSpendingCategoryDropdown);
+    });
+
+    // Variable to track the index of the spending entry being edited (if any)
+    var editSpendingIndex = null;
+
+    function AddSpendAmount() {
+        const date = document.getElementById('spendDateTime').value;
+        const notes = document.getElementById('spendNotes').value;
+        const category = document.getElementById('spendCategory').value;
+        const amount = document.getElementById('spendAmount').value;
+        const spendSource = document.querySelector('input[name="spendSource"]:checked').value;
+
+        if (amount < 0) {
+            showWarningToast("Entered amount should not be less than zero.");
+            return false;
+        }
+
+        // Validate the fields
+        if (!date || !notes || !category || !amount) {
+            showWarningToast('Please fill all fields');
+            return;
+        }
+
+        let remainingAmount = calculateRemainingAmount();
+
+        //While editing, treat this as the remaining amount, as it will be considered part of the total spent amount
+        if (editSpendingIndex !== null) {
+            remainingAmount = remainingAmount + SpendingSource[editSpendingIndex].Amount;
+        }
+
+        if (amount > remainingAmount) {
+            showWarningToast(`Oops! You have only ${selectedCurrencySym}${remainingAmount.toLocaleString()} remaining to spend in this selected month.`);
+            return;
+        }
+
+        // Create new spending entry
+        let newSpending = {
+            Date: date,
+            Notes: notes,
+            Category: category,
+            Amount: parseFloat(amount),
+            Source: spendSource
+        };
+
+        if (editSpendingIndex !== null) {
+            // Update existing entry
+            SpendingSource[editSpendingIndex] = newSpending;
+            editSpendingIndex = null;  // Reset the edit index after updating
+            // Change button text back to "Add Spend" and hide the cancel button
+            document.getElementById('addspendBtn').innerText = 'Add Spend';
+        } else {
+            // Add the new spending entry to the array
+            SpendingSource.push(newSpending);
+        }
+
+        // Reset the form fields
+        document.getElementById('spendNotes').value = '';
+        document.getElementById('spendAmount').value = '';
+        //SaveUserData
+        SaveUserData();
+        showSuccessToast("Added successfully!");
+        // Update the spending table displayed in the modal
+        updateSpendingTable();
+    }
+
+    // Function to update the spending table displayed in the modal
+    function updateSpendingTable() {
+        userMasterData.TotalSpend = SpendingSource; // Update the master data with the new spend entries
+
+        // Get the selected date range from the input
+        let selectedRange = document.getElementById("dateRange").value;
+        let dates = selectedRange.split(' - ');
+
+        // Parse the start and end dates using moment.js
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');
+
+        const spendingTableBody = document.getElementById('spendTableBody');
+        spendingTableBody.innerHTML = ''; // Clear current table
+
+        // Loop through SpendingSource and filter by date range before displaying
+        SpendingSource.forEach((spending, index) => {
+            // Check if spending date is within the selected range
+            let spendDate = moment(spending.Date).startOf('day');
+            if (spendDate.isBetween(selectedStartDate, selectedEndDate, undefined, '[]')) {
+                let row = document.createElement('tr');
+
+                // Determine if the buttons should be displayed based on category
+                const isSavingsTransferred = spending.Category === "SavingsTransferred" || spending.Category === "Savings";
+                const editButton = !isSavingsTransferred
+                    ? `<button class="btn btn-sm btn-warning me-2" onclick="editSpending(${index})">Edit</button>`
+                    : '';
+                const deleteButton = !isSavingsTransferred
+                    ? `<button class="btn btn-sm btn-danger" onclick="deleteSpending(${index})">Delete</button>`
+                    : '';
+
+                // Create table row with spending details
+                row.innerHTML = `
+                        <td>${moment(spendDate).format('DD/MM/YYYY hh:mm A')}</td>
+                        <td>${spending.Notes}</td>
+                        <td>${spending.Category}</td>
+                        <td>${selectedCurrencySym}${spending.Amount.toFixed(2)}</td>
+                        <td>
+                            ${editButton}
+                            ${deleteButton}
+                        </td>
+                    `;
+
+                // Append the row to the table body
+                spendingTableBody.appendChild(row);
+            }
+        });
+
+        // Re-load spend datatable
+        populateSpendTable();
+        // Re-calculate and display spend
+        calculateTotalIcomeandSpend();
+        // Re-calculate and display allocated amount for selected category
+        calculateBudgetPercentage();
+    }
+
+
+
+    // Function to set min and max date range on the incomeDateTime input
+    function setSpendDateRange() {
+
+        // Get selected date range from the #dateRange input field
+        let selectedRange = document.getElementById("dateRange").value;
+
+        // Split the value into start and end dates
+        let dates = selectedRange.split(' - ');
+
+        // Parse the start and end dates using moment.js
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');
+
+        // Get the incomeDateTime input
+        const spendDateTimeInput = document.getElementById('spendDateTime');
+
+        // Set the min and max attributes with the selected range
+        spendDateTimeInput.min = selectedStartDate.format('YYYY-MM-DDT00:00');
+        spendDateTimeInput.max = selectedEndDate.format('YYYY-MM-DDT23:59');
+
+        // Set the current date within the selected range
+        let now = moment();
+
+        // Ensure the default value falls within the selected date range
+        if (now.isBefore(selectedStartDate)) {
+            now = selectedEndDate;
+        } else if (now.isAfter(selectedEndDate)) {
+            now = selectedStartDate;
+        }
+
+        // Set the 'incomeDateTime' field to the current date or within the range
+        spendDateTimeInput.value = now.format('YYYY-MM-DDTHH:mm');
+    }
+
+    // Function to delete a spending entry
+    function deleteSpending(index) {
+        if (confirm('Are you sure you want to delete this entry?')) {
+            SpendingSource.splice(index, 1); // Remove entry from array
+            //SaveUserData
+            SaveUserData();
+            showSuccessToast("Deleted successfully!");
+
+            updateSpendingTable(); // Update table display
+        }
+    }
+
+    // Function to edit a spending entry (prefill fields)
+    function editSpending(index) {
+        document.getElementById('addspendBtn').innerText = 'Update Spend';
+
+        const spending = SpendingSource[index];
+        document.getElementById('spendDateTime').value = spending.Date;
+        document.getElementById('spendNotes').value = spending.Notes;
+        document.getElementById('spendAmount').value = spending.Amount;
+
+        // Pre-select the correct radio button based on the spending source
+        if (spending.source === 'income') {
+            document.getElementById('spendFromIncome').checked = true;
+        } else if (spending.source === 'savings') {
+            document.getElementById('spendFromSavings').checked = true;
+        }
+
+        // Update the dropdown based on the selected source
+        updateSpendingCategoryDropdown();
+
+        // Set the selected category in the dropdown
+        document.getElementById('spendCategory').value = spending.Category;
+
+        // Set the index of the entry being edited
+        editSpendingIndex = index;
+    }
+
+    function cancelEdit() {
+        // Reset the form fields
+        document.getElementById('spendNotes').value = '';
+        document.getElementById('spendAmount').value = '';
+
+        // Reset editSpendingIndex
+        editSpendingIndex = null;
+
+        // Change button text back to "Add Spend" and hide the cancel button
+        document.getElementById('addspendBtn').innerText = 'Add Spend';
+    }
+
+    function calculateBudgetPercentage() {
+        const selectedCategory = document.getElementById('spendCategory').value;
+
+        // Get the selected date range from the input
+        let selectedRange = document.getElementById("dateRange").value;
+        let dates = selectedRange.split(' - ');
+
+        // Parse the start and end dates using moment.js
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');
+
+        // Calculate total income for the selected date range
+        let totalIncome = userMasterData.TotalIncome
+            .filter(income => moment(income.DateTime).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]'))
+            .reduce((sum, income) => sum + income.Amount, 0);
+
+        if (!selectedCategory || totalIncome === 0) return;
+
+        // Find index of the selected category and get its percentage
+        const categoryIndex = userMasterData.BudgetingCategorie.indexOf(selectedCategory);
+        if (categoryIndex === -1) return;
+
+        const categoryPercentage = userMasterData.BudgetCategoriePercentage[categoryIndex];
+        const allocatedBudget = (categoryPercentage / 100) * totalIncome;
+
+        // Calculate the total amount already spent on the selected category in the selected date range
+        let totalSpent = userMasterData.TotalSpend
+            .filter(spend => spend.Category === selectedCategory && moment(spend.Date).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]'))
+            .reduce((sum, spend) => sum + spend.Amount, 0);
+
+        // Calculate remaining budget after spent amount
+        let remainingBudget = allocatedBudget - totalSpent;
+        remainingBudget = remainingBudget > 0 ? remainingBudget : 0; // Ensure remaining is not negative
+
+        //Add validation to the Amount number field
+        let remaindingfromIcomeInRange = calculateRemainingAmount();
+        const amountField = document.getElementById("spendAmount");
+        amountField.max = remaindingfromIcomeInRange.toFixed(2);
+
+        // Display the result
+        document.getElementById('budgetPercentageResult').innerText =
+            `${selectedCategory} has ${categoryPercentage}% allocated, which equals ${allocatedBudget.toFixed(2)} based on your total income of ${totalIncome.toFixed(2)}. ` +
+            (totalSpent > 0
+                ? `Out of which, ${totalSpent.toFixed(2)} is already spent, so the remaining amount from the budget allocation is ${remainingBudget.toFixed(2)} for the selected period.`
+                : `No amount has been spent yet, so the entire budget allocation of ${allocatedBudget.toFixed(2)} remains.`);
+    }
+
+
+    function calculateRemainingAmount() {
+        // Get the selected date range from the input
+        let selectedRange = document.getElementById("dateRange").value;
+        let dates = selectedRange.split(' - ');
+
+        // Parse the start and end dates using moment.js
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');
+        // Filter and calculate Total Income within the selected date range
+        let totalIncomeInRange = userMasterData.TotalIncome
+            .filter(income => moment(income.DateTime).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]'))
+            .reduce((sum, income) => sum + income.Amount, 0);
+
+        // Filter and calculate Total Spend within the selected date range
+        let totalSpendInRange = userMasterData.TotalSpend
+            .filter(spend => moment(spend.Date).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]'))
+            .reduce((sum, spend) => sum + spend.Amount, 0);
+
+        // Calculate remaining amount
+        let remainingFromIncomeInRange = totalIncomeInRange - totalSpendInRange;
+
+        return remainingFromIncomeInRange; // Return the remaining amount
+    }
+
+    //********************************************************************************************************************************************************* */
+    // Spend Mangement End
+    //********************************************************************************************************************************************************* */
+
+
+    //********************************************************************************************************************************************************* */
+    // Icome and Spend Display DataTable
+    //********************************************************************************************************************************************************* */
+
+    let isSpendGroupedByCategory = true; // Tracks if currently grouped by category
+
+    // Function to populate the spend table based on grouping
+    function populateSpendTable(groupByCategory = true) {
+        const spendTable = document.getElementById('spendTable');
+        const spendTableHead = spendTable.querySelector('thead');
+        const spendTableBody = spendTable.querySelector('tbody');
+
+        // Update the global state
+        isSpendGroupedByCategory = groupByCategory;
+
+        // Get the selected date range (update this logic as per your input field)
+        let selectedRange = document.getElementById("dateRange").value;
+        let dates = selectedRange.split(' - ');
+
+        // Parse the dates
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');
+
+        // Calculate total income in the selected range
+        let totalIncomeInRange = userMasterData.TotalIncome
+            .filter(income => moment(income.DateTime).startOf('day').isBetween(selectedStartDate, selectedEndDate, undefined, '[]'))
+            .reduce((sum, income) => sum + income.Amount, 0);
+
+        // Clear existing content
+        spendTableHead.innerHTML = '';
+        spendTableBody.innerHTML = '';
+
+        // Create headers
+        const headers = groupByCategory
+            ? ['Category', `Actual ${selectedCurrencySym}`, 'Actual %', `Allocated ${selectedCurrencySym}`, 'Allocated %',]
+            : ['Date', 'Category', `Amount ${selectedCurrencySym}`, 'Notes'];
+
+        const headerRow = document.createElement('tr');
+        headers.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+        spendTableHead.appendChild(headerRow);
+
+        if (groupByCategory) {
+            // Group data by category and calculate the sums and percentages
+            const groupedSpend = userMasterData.TotalSpend.reduce((acc, item) => {
+                let spendDate = moment(item.Date).startOf('day');
+                if (spendDate.isBetween(selectedStartDate, selectedEndDate, undefined, '[]')) {
+                    if (!acc[item.Category]) {
+                        acc[item.Category] = { totalAmount: 0, category: item.Category };
+                    }
+                    acc[item.Category].totalAmount += item.Amount;
+                }
+                return acc;
+            }, {});
+
+            // Add rows for each category
+            Object.keys(groupedSpend).forEach(category => {
+                const group = groupedSpend[category];
+                let allocatedPercentageIndex = userMasterData.BudgetingCategorie.indexOf(category);
+                let allocatedPercentage = userMasterData.BudgetCategoriePercentage[allocatedPercentageIndex] || 0;
+
+                // Calculate values
+                const actualPercentage = ((group.totalAmount / totalIncomeInRange) * 100).toFixed(2);
+                const allocatedAmount = (totalIncomeInRange * allocatedPercentage / 100).toFixed(2);
+                const allocatedPercent = allocatedPercentage.toFixed(2);
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                                            <td>${category}</td>
+                                            <td>${group.totalAmount.toFixed(2)}</td>
+                                            <td>${actualPercentage}%</td>
+                                            <td>${allocatedAmount}</td>
+                                            <td>${allocatedPercent}%</td>
+
+                                                                 `;
+                spendTableBody.appendChild(row);
+            });
+        } else {
+            // List all transactions
+            userMasterData.TotalSpend.forEach(item => {
+                let spendDate = moment(item.Date).startOf('day');
+                if (spendDate.isBetween(selectedStartDate, selectedEndDate, undefined, '[]')) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                                                                    <td>${spendDate.format('MM/DD/YYYY')}</td>
+                                                                    <td>${item.Category}</td>
+                                                                    <td>${item.Amount.toFixed(2)}</td>
+                                                                    <td>${item.Notes}</td>
+                                                                `;
+                    spendTableBody.appendChild(row);
+                }
+            });
+        }
+    }
+
+
+    let isIncomeDetailTableGroupedByCategory = true; // Tracks if the table is currently grouped by category
+
+    // Function to populate the income table
+    function populateIncomeTable(groupByCategory = true) {
+        const incomeTable = document.getElementById('incomeTable');
+        const incomeTableHead = incomeTable.querySelector('thead');
+        const incomeTableBody = incomeTable.querySelector('tbody');
+
+        // Update the global state
+        isIncomeDetailTableGroupedByCategory = groupByCategory;
+
+        // Get the selected date range (update this logic as per your input field)
+        let selectedRange = document.getElementById("dateRange").value;
+        let dates = selectedRange.split(' - ');
+
+        // Parse the dates
+        let selectedStartDate = moment(dates[0], 'MM/DD/YYYY');
+        let selectedEndDate = moment(dates[1], 'MM/DD/YYYY');
+
+        // Clear existing content
+        incomeTableHead.innerHTML = '';
+        incomeTableBody.innerHTML = '';
+
+        // Define table headers based on grouping
+        const headers = groupByCategory ? ['Category', 'Amount'] : ['Date', 'Category', 'Amount', 'Notes'];
+
+        // Create and append header row
+        const headerRow = document.createElement('tr');
+        headers.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+        incomeTableHead.appendChild(headerRow);
+
+        if (groupByCategory) {
+            // Group data by category and calculate total amounts
+            const groupedIncome = userMasterData.TotalIncome.reduce((acc, item) => {
+                let incomeDate = moment(item.DateTime).startOf('day');
+                if (incomeDate.isBetween(selectedStartDate, selectedEndDate, undefined, '[]')) {
+                    if (!acc[item.Category]) {
+                        acc[item.Category] = { totalAmount: 0, category: item.Category, notes: item.Notes };
+                    }
+                    acc[item.Category].totalAmount += item.Amount;
+                }
+                return acc;
+            }, {});
+
+            // Add rows for each category with total amounts
+            Object.keys(groupedIncome).forEach(category => {
+                const group = groupedIncome[category];
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                                                                <td>${category}</td>
+                                                                <td>${group.totalAmount.toFixed(2)}</td>
+                                                            `;
+                incomeTableBody.appendChild(row);
+            });
+        } else {
+            // List all transactions without grouping
+            userMasterData.TotalIncome.forEach(item => {
+                let incomeDate = moment(item.DateTime).startOf('day');
+                if (incomeDate.isBetween(selectedStartDate, selectedEndDate, undefined, '[]')) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                                                                    <td>${incomeDate.format('MM/DD/YYYY')}</td>
+                                                                    <td>${item.Category}</td>
+                                                                    <td>${item.Amount.toFixed(2)}</td>
+                                                                    <td>${item.Notes}</td>
+                                                                `;
+                    incomeTableBody.appendChild(row);
+                }
+            });
+        }
+    }
+
+
+
+    //********************************************************************************************************************************************************* */
+    // Icome and Spend Display DataTable End
+    //********************************************************************************************************************************************************* */
+</script>
+
+<style>
+    .chart-container {
+        position: relative;
+        height: 300px; /* Set the desired height */
+        width: 100%; /* Ensure the chart fills the container width */
+    }
+
+    .amountSummary {
+        background: deepskyblue; /*greenyellow*/
+    }
+
+    @@media (max-width: 576px) {
+        /* Modal adjustments */
+        .modal-body .form-check-inline {
+            display: block; /* Stack checkboxes vertically on small screens */
+        }
+
+        .modal-content {
+            padding: 10px;
+        }
+
+        .modal-title {
+            font-size: 0.875rem;
+        }
+        /* Font and padding adjustments */
+        .form-label, .card-title, #spendAmountDatatatableDateRange, #incomeSelectedDateRange {
+            font-size: 1rem;
+        }
+
+        .table th, .table td {
+            font-size: 0.875rem;
+            padding: 0.5rem;
+        }
+
+        #totalSelectedAmount {
+            font-size: 0.875rem;
+        }
+        /* Button adjustments */
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-primary.btn-sm {
+            font-size: 0.8rem;
+        }
+        /* Table responsiveness */
+        .table-responsive {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+    }
+
+    .percentage-value {
+        font-weight: bold;
+        width: 100%;
+        max-width: 80px; /* Set a max width for larger screens */
+        text-align: right;
+    }
+
+
+    .table-responsive {
+        max-height: 300px; /* Adjust based on your design */
+        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-x: auto; /* Enable horizontal scrolling if needed */
+    }
+
+    canvas {
+        height: 100%; /* Ensure canvas fills the container height */
+        width: 100%; /* Ensure canvas fills the container width */
+    }
+
+    .editable-field {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        width: 100%;
+        text-align: center;
+    }
+
+        .editable-field:hover, .editable-field:focus {
+            border-bottom: 1px solid #ced4da;
+            background-color: #f8f9fa;
+        }
+
+    .position-relative {
+        position: relative;
+    }
+
+
+    .form-range {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+    .modal-body .form-label {
+        font-weight: bold;
+    }
+
+    .modal-body .form-control, .modal-body .form-select {
+        margin-bottom: 15px;
+    }
+
+    #incomeList li {
+        font-size: 0.9rem;
+    }
+
+    /* css for datatable  */
+    /* Ensure equal height for both cards */
+    .equal-height {
+        height: 600px; /* Adjust height as needed */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Base styles for larger screens (remain unchanged) */
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em; /* Default font size */
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        width: 100%;
+    }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px; /* Default padding */
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+            .styled-table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+            .styled-table tbody tr:last-of-type {
+                border-bottom: 2px solid #009879;
+            }
+
+            .styled-table tbody tr.active-row {
+                font-weight: bold;
+                color: #009879;
+            }
+
+    /* Media Query for smaller screens (phones) */
+    @@media (max-width: 576px) {
+        .table-responsive {
+            overflow-x: auto;
+            justify-content: initial;
+        }
+
+        .styled-table {
+            font-size: 0.75em; /* Reduce font size */
+            margin: 10px 0; /* Reduce margin */
+        }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 8px; /* Adjust padding for better fit */
+            }
+
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 0.75em; /* Smaller buttons */
+        }
+    }
+
+    /* Media Query for slightly larger mobile screens and tablets (up to 768px) */
+    @@media (max-width: 768px) {
+        .table-responsive {
+            overflow-x: auto;
+            justify-content: initial;
+        }
+
+        .styled-table {
+            font-size: 0.85em; /* Slightly larger font compared to smaller screens */
+            margin: 15px 0; /* Slightly more margin for better spacing */
+        }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 10px; /* Adjust padding for better fit */
+            }
+
+        .btn-sm {
+            padding: 6px 10px;
+            font-size: 0.85em; /* Larger button padding and font size */
+        }
+    }
+
+    /* For very small screens */
+    @@media (max-width: 360px) {
+        .styled-table {
+            font-size: 10px; /* Adjust font size for very small devices */
+        }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 6px; /* Further reduce padding */
+            }
+    }
+
+    .card-body {
+        background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%);
+    }
+
+</style>

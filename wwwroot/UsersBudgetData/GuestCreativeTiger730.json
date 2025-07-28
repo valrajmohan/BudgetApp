@@ -1,0 +1,131 @@
+{
+  "BudgetingCategorie": [
+    "Savings",
+    "Food",
+    "Clothing",
+    "Home Maintenance",
+    "Vehicle",
+    "Childcare",
+    "Children's Education Fees",
+    "Gold Savings",
+    "Children Future Savings",
+    "Family Entertainment",
+    "Gas (Cooking Gas)",
+    "Electricity (EB) Bill",
+    "Water Bill",
+    "Makeup and Beauty Products",
+    "Home Appliances",
+    "Donations",
+    "Family Functions",
+    "Gifts",
+    "Medical Expenses",
+    "Mobile Recharge",
+    "Groceries",
+    "Pet Care",
+    "Travel Expenses",
+    "Retirement Savings",
+    "HealthCare",
+    "Snacks"
+  ],
+  "BudgetCategoriePercentage": [
+    25,
+    4,
+    4,
+    4,
+    3,
+    4,
+    6,
+    4,
+    5,
+    4,
+    2,
+    1,
+    1,
+    1,
+    5,
+    1,
+    5,
+    2,
+    3,
+    2,
+    3,
+    1,
+    2,
+    4,
+    1,
+    3
+  ],
+  "IncomeCategories": [
+    "Salary",
+    "Profit",
+    "Interest",
+    "Loan",
+    "Gifted Amount",
+    "Sale Amount"
+  ],
+  "TotalSpend": [
+    {
+      "Date": "2024-10-21T22:41:00",
+      "Notes": "testsavings",
+      "Category": "Savings",
+      "Amount": 201.0,
+      "Source": "income"
+    },
+    {
+      "Date": "2024-10-21T22:41:00",
+      "Notes": "testclothing",
+      "Category": "Clothing",
+      "Amount": 200.0,
+      "Source": "income"
+    },
+    {
+      "Date": "2024-10-21T22:41:00",
+      "Notes": "testremaingamount",
+      "Category": "Gold Savings",
+      "Amount": 500.0,
+      "Source": "income"
+    },
+    {
+      "Date": "2024-10-21T22:41:00",
+      "Notes": "tes",
+      "Category": "Family Entertainment",
+      "Amount": 50.0,
+      "Source": "income"
+    },
+    {
+      "Date": "2024-10-21T23:51:00",
+      "Notes": "lasttest",
+      "Category": "Home Appliances",
+      "Amount": 1010.0,
+      "Source": "income"
+    },
+    {
+      "Date": "2024-10-21T23:51:00",
+      "Notes": "testadded",
+      "Category": "Family Entertainment",
+      "Amount": 10.0,
+      "Source": "income"
+    }
+  ],
+  "TotalIncome": [
+    {
+      "DateTime": "2024-10-21T22:41:00",
+      "Notes": "testincome",
+      "Category": "Salary",
+      "Amount": 1001.0
+    },
+    {
+      "DateTime": "2024-09-01T00:00:00",
+      "Notes": "test previous",
+      "Category": "Gifted Amount",
+      "Amount": 1000.0
+    },
+    {
+      "DateTime": "2024-10-26T00:16:00",
+      "Notes": "1000",
+      "Category": "Interest",
+      "Amount": 2000.0
+    }
+  ],
+  "SelectedCurrency": "USD"
+}
