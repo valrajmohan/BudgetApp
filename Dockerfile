@@ -1,19 +1,19 @@
-# Use official .NET image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
+# Use .NET 8 SDK to build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-
-# Copy everything
 COPY . .
 
-# Restore and publish
+# Restore dependencies
 RUN dotnet restore MyBudgetTracker.csproj
-RUN dotnet publish -c Release -o /app
 
-FROM base AS final
+# Build and publish
+RUN dotnet publish MyBudgetTracker.csproj -c Release -o /app
+
+# Use .NET 8 runtime to run
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+
 WORKDIR /app
-COPY --from=build /app .
+COPY --from=build /app ./
 
 ENTRYPOINT ["dotnet", "MyBudgetTracker.dll"]
