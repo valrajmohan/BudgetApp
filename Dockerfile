@@ -1,19 +1,19 @@
-# Build stage
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# Use official .NET image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 
-# Copy csproj and restore
-COPY MyBudgetTracker/*.csproj ./MyBudgetTracker/
-RUN dotnet restore ./MyBudgetTracker/MyBudgetTracker.csproj
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
 
-# Copy rest of the app
-COPY . ./
+# Copy everything
+COPY . .
 
-WORKDIR /app/MyBudgetTracker
-RUN dotnet publish -c Release -o /app/out
+# Restore and publish
+RUN dotnet restore MyBudgetTracker.csproj
+RUN dotnet publish -c Release -o /app
 
-# Runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app/out ./
+COPY --from=build /app .
+
 ENTRYPOINT ["dotnet", "MyBudgetTracker.dll"]
